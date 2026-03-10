@@ -50,6 +50,8 @@ export function Navbar() {
               width={80}
               height={20}
               className="h-4 md:h-[18px] w-auto"
+              loading="eager"
+              priority
             />
           </Link>
 
