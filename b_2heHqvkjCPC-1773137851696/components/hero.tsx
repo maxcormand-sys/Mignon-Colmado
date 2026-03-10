@@ -44,7 +44,7 @@ export function Hero() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative h-full">
           <Image
@@ -53,8 +53,19 @@ export function Hero() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
+      </div>
+
+      {/* Shop interior image - full width */}
+      <div className="relative h-screen">
+        <Image
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1-XzPFS5AXf7q2JS2khuuwsw3lZquOdY.jpg"
+          alt="Interior de la tienda Mignon con ceramica, lamparas y objetos vintage"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/50" />
       </div>
 
       {/* Second row of two images */}
@@ -66,7 +77,7 @@ export function Hero() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative h-full">
           <Image
@@ -75,7 +86,7 @@ export function Hero() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
       </div>
     </section>
