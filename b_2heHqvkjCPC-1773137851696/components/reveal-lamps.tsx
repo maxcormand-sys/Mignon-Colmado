@@ -21,60 +21,43 @@ const lamps = [
 
 export function RevealLamps() {
   const [activeStates, setActiveStates] = useState<{ [key: number]: boolean }>({})
-  const [mounted, setMounted] = useState(false)
   const timersRef = useRef<{ [key: number]: ReturnType<typeof setTimeout> }>({})
 
   useEffect(() => {
-    setMounted(true)
     return () => {
       Object.values(timersRef.current).forEach(timer => clearTimeout(timer))
     }
   }, [])
 
-  const handleLampClick = (id: number, e: React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    
-    // Clear existing timer for this lamp if any
+  const handleInteraction = (id: number) => {
     if (timersRef.current[id]) {
       clearTimeout(timersRef.current[id])
     }
 
-    // Turn on the light immediately
     setActiveStates(prev => ({ ...prev, [id]: true }))
 
-    // Auto-turn off after 2.5 seconds
     timersRef.current[id] = setTimeout(() => {
       setActiveStates(prev => ({ ...prev, [id]: false }))
       delete timersRef.current[id]
     }, 2500)
   }
 
-  // Only render interactive content after hydration to avoid mismatch
-  if (!mounted) {
-    return (
-      <section className="relative">
-        <div className="bg-background px-6 py-12 md:py-16 text-center">
-          <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-foreground/40 block mb-3">
-            Descobreix
-          </span>
-          <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em] mb-6">
-            Prem per encendre
-          </h2>
-          <Link
-            href="/cataleg"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#b3dfe0] text-[#2c2420] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors"
-          >
-            Explorar col·leccio
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 bg-foreground/5 aspect-[3/4]" />
-      </section>
-    )
+  const handleMouseEnter = (id: number) => {
+    if (timersRef.current[id]) {
+      clearTimeout(timersRef.current[id])
+    }
+    setActiveStates(prev => ({ ...prev, [id]: true }))
+  }
+
+  const handleMouseLeave = (id: number) => {
+    if (timersRef.current[id]) {
+      clearTimeout(timersRef.current[id])
+    }
+    setActiveStates(prev => ({ ...prev, [id]: false }))
   }
 
   return (
     <section className="relative">
-      {/* Header text */}
       <div className="bg-background px-6 py-12 md:py-16 text-center">
         <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-foreground/40 block mb-3">
           Descobreix
@@ -90,42 +73,38 @@ export function RevealLamps() {
         </Link>
       </div>
 
-      {/* Interactive grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 select-none">
+      <div className="grid grid-cols-1 md:grid-cols-2">
         {lamps.map((lamp) => (
           <div
             key={lamp.id}
-            className="relative aspect-[3/4] cursor-pointer overflow-hidden group select-none touch-none"
-            onClick={(e) => handleLampClick(lamp.id, e)}
-            onTouchEnd={(e) => handleLampClick(lamp.id, e)}
+            className="relative aspect-[3/4] cursor-pointer overflow-hidden"
+            onClick={() => handleInteraction(lamp.id)}
+            onMouseEnter={() => handleMouseEnter(lamp.id)}
+            onMouseLeave={() => handleMouseLeave(lamp.id)}
+            style={{ userSelect: "none" }}
           >
-            {/* Background only */}
             <Image
               src={lamp.background}
-              alt="Fondo textil vintage"
+              alt="Background"
               fill
-              className={`object-cover transition-opacity duration-500 select-none pointer-events-none ${
+              className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
               loading="lazy"
-              draggable={false}
             />
             
-            {/* With lamp */}
             <Image
               src={lamp.withLamp}
               alt={lamp.alt}
               fill
-              className={`object-cover transition-opacity duration-500 select-none pointer-events-none ${
+              className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-100" : "opacity-0"
               }`}
               loading="lazy"
-              draggable={false}
             />
 
-            {/* Hint overlay */}
             <div 
-              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 pointer-events-none ${
+              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
             >
