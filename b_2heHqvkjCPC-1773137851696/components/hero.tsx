@@ -35,7 +35,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-[#2c2420]/30" />
       </div>
 
-      {/* Two images section */}
+      {/* First row of two images */}
       <div className="relative h-screen grid grid-cols-2">
         <div className="relative h-full">
           <Image
@@ -44,6 +44,7 @@ export function Hero() {
             fill
             className="object-cover"
           />
+          <div className="absolute inset-0 bg-black/30" />
         </div>
         <div className="relative h-full">
           <Image
@@ -52,6 +53,29 @@ export function Hero() {
             fill
             className="object-cover"
           />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+      </div>
+
+      {/* Second row of two images */}
+      <div className="relative h-screen grid grid-cols-2">
+        <div className="relative h-full">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pCollar%20cristal%20azul-MKOml8hPW4TU6RL0jDCnvBKy7Nu7tc.jpg"
+            alt="Collar de cristal azul sobre tela con flores"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+        <div className="relative h-full">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A8436-0OZr8gjOFr6FKqXbM3ScDwaC38pxWz.jpg"
+            alt="Bolso vintage marron con cadena dorada"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/30" />
         </div>
       </div>
     </section>
