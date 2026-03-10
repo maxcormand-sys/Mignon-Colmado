@@ -15,8 +15,7 @@ export function Footer() {
                 alt="Mignon"
                 width={120}
                 height={30}
-                className="w-[100px] md:w-[120px] invert"
-                style={{ width: 'auto', height: 'auto' }}
+                className="w-[80px] md:w-[120px] h-auto invert"
               />
               <p className="font-serif italic text-lg md:text-xl text-[#2c2420]/60 max-w-[280px] leading-snug">
                 El Colmado dels Objectes Trobats
@@ -28,8 +27,7 @@ export function Footer() {
                     alt="Mignon logo"
                     width={32}
                     height={32}
-                    className="object-contain"
-                    style={{ width: 'auto', height: 'auto' }}
+                    className="object-contain w-8 h-8"
                   />
                 </div>
                 <span className="text-[11px] text-[#2c2420]/60">@mignoncolmado</span>
