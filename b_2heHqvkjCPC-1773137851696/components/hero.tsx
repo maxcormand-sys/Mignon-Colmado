@@ -38,7 +38,7 @@ export function Hero() {
             amb vida
           </h1>
           {/* Short description on mobile */}
-          <p className="md:hidden text-[13px] text-[#fffdf8]/60 max-w-[280px] leading-relaxed mt-2">
+          <p className="md:hidden text-[13px] text-[#fffdf8]/60 max-w-[85%] leading-relaxed mt-2">
             Peces uniques dels anys 60 i 70 curades amb estima a Barcelona.
           </p>
         </div>
