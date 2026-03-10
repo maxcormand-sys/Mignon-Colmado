@@ -41,8 +41,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
       track.scrollLeft += velocityRef.current
       velocityRef.current *= 0.95
     } else {
-      // Auto scroll when no momentum
-      track.scrollLeft += 0.5
+      // Auto scroll when no momentum - scroll in opposite direction (right to left)
+      track.scrollLeft -= 0.5
     }
 
     // Loop back for infinite scroll
