@@ -3,55 +3,45 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import Image from "next/image"
 import type { Product } from "@/lib/products"
+import { categories, type Category } from "@/lib/products"
 import { useCart } from "@/components/cart-provider"
 import { Plus } from "lucide-react"
 
 interface ProductCarouselProps {
   products: Product[]
-  title: string
-  subtitle?: string
-  direction?: "left" | "right"
-  speed?: number
-  variant?: "default" | "featured" | "minimal"
 }
 
-export function ProductCarousel({
-  products,
-  title,
-  subtitle,
-  direction = "left",
-  speed = 0.3,
-  variant = "default",
-}: ProductCarouselProps) {
+export function ProductCarousel({ products }: ProductCarouselProps) {
   const { addItem } = useCart()
   const trackRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [activeFilter, setActiveFilter] = useState<Category>("Todo")
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const [containerCenter, setContainerCenter] = useState(0)
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true)
   const animationRef = useRef<number | null>(null)
-  const positionRef = useRef(0)
   const velocityRef = useRef(0)
+  const lastTimeRef = useRef(0)
+  const lastXRef = useRef(0)
 
-  // Duplicate for infinite effect
-  const duplicatedProducts = [...products, ...products, ...products]
+  const filteredProducts = activeFilter === "Todo" 
+    ? products 
+    : products.filter(p => p.category === activeFilter)
 
+  // Duplicate products for infinite scroll effect
+  const displayProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts]
+
+  // Reset scroll position when filter changes
   useEffect(() => {
-    const updateCenter = () => {
-      if (containerRef.current) {
-        setContainerCenter(containerRef.current.offsetWidth / 2)
-      }
+    if (trackRef.current) {
+      trackRef.current.scrollLeft = 0
     }
-    updateCenter()
-    window.addEventListener("resize", updateCenter)
-    return () => window.removeEventListener("resize", updateCenter)
-  }, [])
+  }, [activeFilter])
 
+  // Auto-scroll animation
   const animate = useCallback(() => {
-    if (!trackRef.current) {
+    if (!trackRef.current || !isAutoScrolling || isDragging) {
       animationRef.current = requestAnimationFrame(animate)
       return
     }
@@ -59,26 +49,24 @@ export function ProductCarousel({
     const track = trackRef.current
     const maxScroll = track.scrollWidth / 3
 
-    if (!isDragging && Math.abs(velocityRef.current) > 0.1) {
-      positionRef.current += velocityRef.current
+    // Apply velocity decay
+    if (Math.abs(velocityRef.current) > 0.5) {
+      track.scrollLeft += velocityRef.current
       velocityRef.current *= 0.95
-    } else if (!isPaused && !isDragging) {
-      if (direction === "left") {
-        positionRef.current += speed
-      } else {
-        positionRef.current -= speed
-      }
+    } else {
+      // Auto scroll when no momentum
+      track.scrollLeft += 0.5
     }
 
-    if (positionRef.current >= maxScroll) {
-      positionRef.current = positionRef.current - maxScroll
-    } else if (positionRef.current < 0) {
-      positionRef.current = maxScroll + positionRef.current
+    // Loop back for infinite scroll
+    if (track.scrollLeft >= maxScroll * 2) {
+      track.scrollLeft = maxScroll
+    } else if (track.scrollLeft <= 0) {
+      track.scrollLeft = maxScroll
     }
 
-    track.style.transform = `translateX(-${positionRef.current}px)`
     animationRef.current = requestAnimationFrame(animate)
-  }, [direction, speed, isPaused, isDragging])
+  }, [isAutoScrolling, isDragging])
 
   useEffect(() => {
     animationRef.current = requestAnimationFrame(animate)
@@ -89,181 +77,236 @@ export function ProductCarousel({
     }
   }, [animate])
 
+  // Mouse drag handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true)
-    setStartX(e.pageX)
-    setScrollLeft(positionRef.current)
+    setIsAutoScrolling(false)
+    setStartX(e.pageX - (trackRef.current?.offsetLeft || 0))
+    setScrollLeft(trackRef.current?.scrollLeft || 0)
+    lastXRef.current = e.pageX
+    lastTimeRef.current = Date.now()
     velocityRef.current = 0
   }
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return
+    if (!isDragging || !trackRef.current) return
     e.preventDefault()
-    const x = e.pageX
-    const walk = startX - x
-    velocityRef.current = walk * 0.1
-    positionRef.current = scrollLeft + walk
+    
+    const x = e.pageX - (trackRef.current.offsetLeft || 0)
+    const walk = (x - startX) * 1.5
+    trackRef.current.scrollLeft = scrollLeft - walk
+
+    // Calculate velocity for momentum
+    const now = Date.now()
+    const dt = now - lastTimeRef.current
+    if (dt > 0) {
+      velocityRef.current = (lastXRef.current - e.pageX) / dt * 15
+    }
+    lastXRef.current = e.pageX
+    lastTimeRef.current = now
   }
 
   const handleMouseUp = () => {
     setIsDragging(false)
+    setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      setIsDragging(false)
+      setTimeout(() => setIsAutoScrolling(true), 2000)
+    }
+  }
+
+  // Touch handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     setIsDragging(true)
-    setStartX(e.touches[0].pageX)
-    setScrollLeft(positionRef.current)
+    setIsAutoScrolling(false)
+    setStartX(e.touches[0].pageX - (trackRef.current?.offsetLeft || 0))
+    setScrollLeft(trackRef.current?.scrollLeft || 0)
+    lastXRef.current = e.touches[0].pageX
+    lastTimeRef.current = Date.now()
     velocityRef.current = 0
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return
-    const x = e.touches[0].pageX
-    const walk = startX - x
-    velocityRef.current = walk * 0.1
-    positionRef.current = scrollLeft + walk
+    if (!isDragging || !trackRef.current) return
+    
+    const x = e.touches[0].pageX - (trackRef.current.offsetLeft || 0)
+    const walk = (x - startX) * 1.5
+    trackRef.current.scrollLeft = scrollLeft - walk
+
+    const now = Date.now()
+    const dt = now - lastTimeRef.current
+    if (dt > 0) {
+      velocityRef.current = (lastXRef.current - e.touches[0].pageX) / dt * 15
+    }
+    lastXRef.current = e.touches[0].pageX
+    lastTimeRef.current = now
   }
 
   const handleTouchEnd = () => {
     setIsDragging(false)
+    setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
-  const cardWidth = variant === "featured" ? "w-[300px] md:w-[380px]" : variant === "minimal" ? "w-[220px] md:w-[280px]" : "w-[260px] md:w-[320px]"
-  const cardGap = variant === "featured" ? "gap-6 md:gap-8" : "gap-4 md:gap-6"
+  // Wheel handler for trackpad horizontal scroll
+  const handleWheel = (e: React.WheelEvent) => {
+    if (!trackRef.current) return
+    
+    // Detect if it's a horizontal scroll (trackpad gesture)
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      e.preventDefault()
+      setIsAutoScrolling(false)
+      trackRef.current.scrollLeft += e.deltaX
+      
+      // Resume auto-scroll after inactivity
+      setTimeout(() => setIsAutoScrolling(true), 2000)
+    }
+  }
 
   return (
-    <section className="relative py-8 md:py-12">
-      {/* Header with category pill */}
-      <div className="px-5 md:px-10 mb-8 md:mb-12">
-        <div className="flex items-center gap-4">
-          <div 
-            className="h-px flex-1 bg-border"
-            style={{ maxWidth: "60px" }}
-          />
-          <div className="flex flex-col items-center gap-2">
-            {subtitle && (
-              <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
-                {subtitle}
-              </span>
-            )}
-            <h2 className="font-serif text-[clamp(1.25rem,3vw,1.75rem)] text-foreground tracking-tight">
-              {title}
-            </h2>
-          </div>
-          <div 
-            className="h-px flex-1 bg-border"
-            style={{ maxWidth: "60px" }}
-          />
+    <section id="coleccion" className="scroll-mt-20 py-12 md:py-20">
+      {/* Header */}
+      <div className="px-5 md:px-10 mb-10 md:mb-14 text-center">
+        <span className="inline-block text-[10px] font-medium uppercase tracking-[0.4em] text-muted-foreground mb-4 px-4 py-1.5 border border-border rounded-full">
+          Coleccion
+        </span>
+        <h2 className="font-serif italic text-[clamp(2rem,5vw,3.5rem)] leading-[1] text-foreground tracking-tight mb-4">
+          Objectes trobats
+        </h2>
+        <p className="text-[14px] text-muted-foreground max-w-md mx-auto mb-8">
+          Piezas unicas seleccionadas en mercados de toda Europa
+        </p>
+
+        {/* Filter tabs */}
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveFilter(category)}
+              className={`
+                px-4 md:px-6 py-2 md:py-2.5 text-[11px] md:text-[12px] font-medium uppercase tracking-[0.15em] 
+                rounded-full transition-all duration-300 cursor-pointer
+                ${activeFilter === category 
+                  ? "bg-foreground text-background" 
+                  : "bg-transparent text-foreground border border-border hover:bg-foreground/5"
+                }
+              `}
+            >
+              {category}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Carousel */}
-      <div
-        ref={containerRef}
-        className="relative cursor-grab active:cursor-grabbing select-none overflow-hidden"
-        onMouseEnter={() => setIsPaused(true)}
+      {/* Carousel container */}
+      <div 
+        className="relative"
+        onMouseEnter={() => setIsAutoScrolling(false)}
         onMouseLeave={() => {
-          setIsPaused(false)
-          setIsDragging(false)
+          if (!isDragging) setIsAutoScrolling(true)
         }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
       >
+        {/* Product track */}
         <div
           ref={trackRef}
-          className={`flex ${cardGap} will-change-transform px-5 md:px-10`}
+          className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4"
+          style={{ 
+            scrollBehavior: isDragging ? 'auto' : 'smooth',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onWheel={handleWheel}
         >
-          {duplicatedProducts.map((product, index) => (
+          {displayProducts.map((product, index) => (
             <article
               key={`${product.id}-${index}`}
-              className={`flex-shrink-0 ${cardWidth} group relative`}
+              className="flex-shrink-0 w-[280px] md:w-[340px] group"
               onMouseEnter={() => setActiveIndex(index)}
               onMouseLeave={() => setActiveIndex(null)}
             >
-              {/* Card with number badge */}
-              <div className="relative">
-                {/* Product number - editorial style */}
-                <div className="absolute -top-3 -left-2 z-10">
+              {/* Image container */}
+              <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded-lg">
+                <Image
+                  src={
+                    product.imageAlt && activeIndex === index
+                      ? product.imageAlt
+                      : product.image
+                  }
+                  alt={product.name}
+                  fill
+                  className={`object-cover transition-transform duration-700 ease-out pointer-events-none ${
+                    activeIndex === index ? "scale-105" : "scale-100"
+                  }`}
+                  sizes="(max-width: 640px) 280px, 340px"
+                  draggable={false}
+                />
+
+                {/* Category badge */}
+                <div className="absolute top-4 left-4">
                   <span 
-                    className="inline-flex items-center justify-center h-7 w-7 text-[10px] font-medium rounded-full bg-foreground text-background"
+                    className="inline-block px-3 py-1 text-[10px] font-medium uppercase tracking-wider rounded-full bg-background/90 backdrop-blur-sm text-foreground"
                   >
-                    {String((index % products.length) + 1).padStart(2, "0")}
+                    {product.category}
                   </span>
                 </div>
 
-                {/* Image container */}
-                <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded-sm">
-                  <Image
-                    src={
-                      product.imageAlt && activeIndex === index
-                        ? product.imageAlt
-                        : product.image
-                    }
-                    alt={product.name}
-                    fill
-                    className={`object-cover transition-all duration-700 ease-out pointer-events-none ${
-                      activeIndex === index ? "scale-110" : "scale-100"
-                    }`}
-                    sizes="(max-width: 640px) 300px, 380px"
-                    draggable={false}
-                  />
-
-                  {/* Sold overlay */}
-                  {product.sold && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-background/90">
-                      <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                        Vendido
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Hover overlay with add button */}
-                  {!product.sold && (
-                    <div 
-                      className={`absolute inset-0 flex items-end justify-center pb-6 transition-opacity duration-300 ${
-                        activeIndex === index ? "opacity-100" : "opacity-0"
-                      }`}
-                    >
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          if (!isDragging) {
-                            addItem(product)
-                          }
-                        }}
-                        className="flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-[11px] font-medium uppercase tracking-[0.15em] rounded-full transition-transform duration-300 hover:scale-105 cursor-pointer"
-                        aria-label={`Anadir ${product.name} al carrito`}
-                      >
-                        <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
-                        Anadir
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Product info bar */}
-                <div className="mt-4 flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-[13px] md:text-[14px] font-medium text-foreground leading-tight truncate">
-                      {product.name}
-                    </h3>
-                    <p className="text-[11px] text-muted-foreground mt-0.5 uppercase tracking-wide">
-                      {product.category}
-                    </p>
+                {/* Sold overlay */}
+                {product.sold && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-background/90 backdrop-blur-sm">
+                    <span className="text-[12px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                      Vendido
+                    </span>
                   </div>
+                )}
+
+                {/* Add to cart button */}
+                {!product.sold && (
                   <div 
-                    className="flex-shrink-0 px-3 py-1 rounded-full text-[12px] font-semibold"
-                    style={{ 
-                      backgroundColor: `${product.color}15`,
-                      color: product.color 
-                    }}
+                    className={`absolute bottom-4 left-4 right-4 transition-all duration-300 ${
+                      activeIndex === index ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                    }`}
                   >
-                    {product.price}&euro;
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        if (!isDragging) {
+                          addItem(product)
+                        }
+                      }}
+                      className="w-full flex items-center justify-center gap-2 px-5 py-3 bg-foreground text-background text-[11px] font-medium uppercase tracking-[0.15em] rounded-full transition-transform duration-300 hover:scale-[1.02] cursor-pointer"
+                      aria-label={`Anadir ${product.name} al carrito`}
+                    >
+                      <Plus className="h-4 w-4" strokeWidth={2} />
+                      Anadir al carrito
+                    </button>
                   </div>
+                )}
+              </div>
+
+              {/* Product info */}
+              <div className="mt-4 flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-[14px] md:text-[15px] font-medium text-foreground leading-tight">
+                    {product.name}
+                  </h3>
+                  <p className="text-[12px] text-muted-foreground mt-1 line-clamp-1">
+                    {product.description}
+                  </p>
+                </div>
+                <div 
+                  className="flex-shrink-0 text-[15px] md:text-[16px] font-semibold"
+                  style={{ color: product.color }}
+                >
+                  {product.price}&euro;
                 </div>
               </div>
             </article>
@@ -271,24 +314,21 @@ export function ProductCarousel({
         </div>
       </div>
 
-      {/* Drag indicator */}
-      <div className="flex justify-center mt-8 md:mt-10">
-        <div className="flex items-center gap-3 px-4 py-2 rounded-full border border-border">
-          <div className="flex gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-foreground animate-pulse" />
-            <span className="w-1.5 h-1.5 rounded-full bg-foreground/40" />
-            <span className="w-1.5 h-1.5 rounded-full bg-foreground/20" />
-          </div>
-          <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            Arrastra para explorar
-          </span>
-          <div className="flex gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-foreground/20" />
-            <span className="w-1.5 h-1.5 rounded-full bg-foreground/40" />
-            <span className="w-1.5 h-1.5 rounded-full bg-foreground animate-pulse" />
-          </div>
+      {/* Scroll hint */}
+      <div className="flex justify-center mt-8">
+        <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="w-8 h-px bg-border" />
+          <span>Desliza o arrastra</span>
+          <span className="w-8 h-px bg-border" />
         </div>
       </div>
+
+      {/* Hide scrollbar globally for this component */}
+      <style jsx global>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   )
 }
