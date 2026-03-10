@@ -36,26 +36,6 @@ export function Hero() {
         <div className="absolute inset-0 bg-[#2c2420]/30" />
       </div>
 
-      {/* Row of two images */}
-      <div className="relative h-screen grid grid-cols-2">
-        <div className="relative h-full">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pJarron%20cristal%20rojo-F9UnWB1dcSaeXJ8LrIBVSsAvthMRyq.jpg"
-            alt="Jarron de cristal rojo sobre tela con flores verdes y blancas"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="relative h-full">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pPlatos%20duralex%20amarillos-9of4wmhIirKKMQZDatqAoKoSS6O0wI.jpg"
-            alt="Platos Duralex amarillos apilados sobre tela colorida"
-            fill
-            className="object-cover"
-          />
-        </div>
-      </div>
-
       {/* Shop interior image - full width */}
       <div className="relative h-screen">
         <Image
