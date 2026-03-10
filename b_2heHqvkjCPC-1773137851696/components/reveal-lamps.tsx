@@ -74,16 +74,8 @@ export function RevealLamps() {
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
             >
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#2c2420] flex items-center justify-center shadow-lg">
-                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#fffdf8]" />
-                </div>
-                <span 
-                  className="text-[10px] md:text-[11px] font-medium uppercase tracking-[0.2em] text-[#fffdf8]"
-                  style={{ textShadow: '0 1px 8px rgba(0,0,0,0.5)' }}
-                >
-                  Encendre
-                </span>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#2c2420] flex items-center justify-center shadow-lg">
+                <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#fffdf8]" />
               </div>
             </div>
           </div>
