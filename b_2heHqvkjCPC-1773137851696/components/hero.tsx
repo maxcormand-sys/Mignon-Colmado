@@ -4,9 +4,19 @@ import Image from "next/image"
 
 export function Hero() {
   return (
-    <section className="relative">
-      {/* Video section with centered logo */}
-      <div className="relative h-screen">
+    <section className="relative h-[200vh]">
+      {/* Shop interior image - fixed behind */}
+      <div className="sticky top-0 h-screen w-full">
+        <Image
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1-XzPFS5AXf7q2JS2khuuwsw3lZquOdY.jpg"
+          alt="Interior de la tienda Mignon con ceramica, lamparas y objetos vintage"
+          fill
+          className="object-cover"
+        />
+      </div>
+
+      {/* Video section with centered logo - slides up on scroll */}
+      <div className="absolute top-0 left-0 right-0 h-screen z-10">
         <video
           autoPlay
           muted
