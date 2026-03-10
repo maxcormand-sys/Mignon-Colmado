@@ -15,7 +15,8 @@ export function Footer() {
                 alt="Mignon"
                 width={120}
                 height={30}
-                className="w-[100px] md:w-[120px] h-auto invert"
+                className="w-[100px] md:w-[120px] invert"
+                style={{ height: 'auto' }}
               />
               <p className="font-serif italic text-lg md:text-xl text-[#2c2420]/60 max-w-[280px] leading-snug">
                 El Colmado dels Objectes Trobats
