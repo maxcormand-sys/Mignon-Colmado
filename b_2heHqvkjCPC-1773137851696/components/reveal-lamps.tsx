@@ -98,7 +98,7 @@ export function RevealLamps() {
               src={lamp.background}
               alt="Background"
               fill
-              sizes="100vw"
+              sizes="(max-width: 768px) 100vw, 50vw"
               className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
@@ -109,7 +109,7 @@ export function RevealLamps() {
               src={lamp.withLamp}
               alt={lamp.alt}
               fill
-              sizes="100vw"
+              sizes="(max-width: 768px) 100vw, 50vw"
               className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-100" : "opacity-0"
               }`}
