@@ -129,8 +129,7 @@ export function Hero() {
               alt="Mignon"
               width={400}
               height={100}
-              className="w-[200px] md:w-[400px] will-change-[filter]"
-              style={{ height: 'auto' }}
+              className="w-[200px] md:w-[400px] h-auto will-change-[filter]"
               priority
             />
             <span 
