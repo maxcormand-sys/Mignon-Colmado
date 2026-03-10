@@ -10,7 +10,6 @@ interface ProductCarouselProps {
 }
 
 export function ProductCarousel({ products }: ProductCarouselProps) {
-  const { addItem } = useCart()
   const trackRef = useRef<HTMLDivElement>(null)
   const [activeFilter, setActiveFilter] = useState<Category>("Todo")
   const [isDragging, setIsDragging] = useState(false)
