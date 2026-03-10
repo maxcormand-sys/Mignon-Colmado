@@ -277,6 +277,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                     }`}
                     sizes="(max-width: 640px) 280px, 340px"
                     draggable={false}
+                    priority={index < 4}
+                    loading={index < 4 ? "eager" : "lazy"}
                   />
 
                   {/* Sold overlay */}
