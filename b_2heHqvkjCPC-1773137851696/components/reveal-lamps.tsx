@@ -21,8 +21,8 @@ const lamps = [
 export function RevealLamps() {
   const [activeStates, setActiveStates] = useState<{ [key: number]: boolean }>({})
 
-  const toggleLamp = (id: number) => {
-    setActiveStates(prev => ({ ...prev, [id]: !prev[id] }))
+  const handleInteraction = (id: number, isActive: boolean) => {
+    setActiveStates(prev => ({ ...prev, [id]: isActive }))
   }
 
   return (
@@ -43,9 +43,10 @@ export function RevealLamps() {
           <div
             key={lamp.id}
             className="relative aspect-[3/4] cursor-pointer overflow-hidden group"
-            onClick={() => toggleLamp(lamp.id)}
-            onMouseEnter={() => setActiveStates(prev => ({ ...prev, [lamp.id]: true }))}
-            onMouseLeave={() => setActiveStates(prev => ({ ...prev, [lamp.id]: false }))}
+            onTouchStart={() => handleInteraction(lamp.id, true)}
+            onTouchEnd={() => handleInteraction(lamp.id, false)}
+            onMouseEnter={() => handleInteraction(lamp.id, true)}
+            onMouseLeave={() => handleInteraction(lamp.id, false)}
           >
             {/* Background only */}
             <Image

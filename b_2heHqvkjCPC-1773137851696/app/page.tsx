@@ -14,6 +14,16 @@ export default function HomePage() {
         <RevealLamps />
         <ProductGrid />
 
+        {/* Shop interior image */}
+        <section className="relative h-screen">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1-XzPFS5AXf7q2JS2khuuwsw3lZquOdY.jpg"
+            alt="Interior de la tienda Mignon con ceramica, lamparas y objetos vintage"
+            fill
+            className="object-cover"
+          />
+        </section>
+
       </main>
       <Footer />
       <CartSheet />
