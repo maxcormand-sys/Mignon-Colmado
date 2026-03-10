@@ -1,69 +1,68 @@
 "use client"
 
-import { useState } from "react"
 import { products, categories, type Category } from "@/lib/products"
-import { ProductCard } from "@/components/product-card"
+import { ProductCarousel } from "@/components/product-carousel"
 
 export function ProductGrid() {
-  const [activeCategory, setActiveCategory] = useState<Category>("Todo")
-
-  const filtered = activeCategory === "Todo"
-    ? products
-    : products.filter((p) => p.category === activeCategory)
+  // Group products by category
+  const iluminacion = products.filter((p) => p.category === "Iluminacion")
+  const ceramica = products.filter((p) => p.category === "Ceramica")
+  const figuras = products.filter((p) => p.category === "Figuras")
 
   return (
     <section id="coleccion" className="scroll-mt-20">
       {/* Section header */}
-      <div className="px-5 md:px-10 pt-16 md:pt-24 pb-8 md:pb-12">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div className="flex flex-col gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-accent">
-              Coleccion
-            </span>
-            <h2 className="font-serif italic text-[clamp(2.2rem,5vw,3.8rem)] leading-[0.9] text-foreground tracking-[-0.02em]">
-              Objectes trobats
-            </h2>
-          </div>
-
-          {/* Category filters */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 text-[10px] font-medium uppercase tracking-[0.15em] border transition-all cursor-pointer ${
-                  activeCategory === cat
-                    ? "bg-foreground text-background border-foreground"
-                    : "bg-transparent text-foreground/60 border-border hover:border-foreground hover:text-foreground"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+      <div className="px-5 md:px-10 pt-16 md:pt-24 pb-4">
+        <div className="flex flex-col gap-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-accent">
+            Coleccion
+          </span>
+          <h2 className="font-serif italic text-[clamp(2.2rem,5vw,3.8rem)] leading-[0.9] text-foreground tracking-[-0.02em]">
+            Objectes trobats
+          </h2>
         </div>
       </div>
 
-      {/* Product grid */}
-      <div className="px-5 md:px-10 pb-16 md:pb-24">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-          {filtered.map((product, i) => (
-            <div
-              key={product.id}
-              className={i === 0 ? "md:col-span-2 md:row-span-2" : ""}
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
-        </div>
+      {/* Carousels by category */}
+      {iluminacion.length > 0 && (
+        <ProductCarousel
+          products={iluminacion}
+          title="Iluminacion vintage"
+          subtitle="Lamparas unicas"
+          direction="left"
+          speed={0.4}
+        />
+      )}
 
-        {filtered.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20 gap-3">
-            <p className="text-[13px] text-muted-foreground">
-              No hay productos en esta categoria por ahora.
-            </p>
-          </div>
-        )}
+      {ceramica.length > 0 && (
+        <ProductCarousel
+          products={ceramica}
+          title="Ceramica artesanal"
+          subtitle="Piezas de coleccion"
+          direction="right"
+          speed={0.35}
+        />
+      )}
+
+      {figuras.length > 0 && (
+        <ProductCarousel
+          products={figuras}
+          title="Figuras decorativas"
+          subtitle="Detalles con caracter"
+          direction="left"
+          speed={0.45}
+        />
+      )}
+
+      {/* All products carousel */}
+      <div className="border-t border-border mt-8">
+        <ProductCarousel
+          products={products}
+          title="Todas las piezas"
+          subtitle="Descubre todo"
+          direction="right"
+          speed={0.3}
+        />
       </div>
     </section>
   )

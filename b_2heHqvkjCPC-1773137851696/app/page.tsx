@@ -90,7 +90,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        <MarqueeBand />
       </main>
       <Footer />
       <CartSheet />
