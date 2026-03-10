@@ -1,20 +1,24 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 
 export function Hero() {
   return (
     <section className="relative min-h-[100dvh] flex flex-col">
-      {/* Background: store image with overlay */}
+      {/* Background: video with overlay */}
       <div className="absolute inset-0">
-        <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-2-VRWAbu0DXPBLpj6jwk016sJwBppf6j.jpg"
-          alt="Interior de la tienda Mignon en Barcelona"
-          fill
-          className="object-cover"
-          priority
-        />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mignon_%20Spot%20_%20Horiz%20%281%29%20%281%29-s5HtSlhWAX09d3hRsaV90ycXhUDjQq.mp4"
+            type="video/mp4"
+          />
+        </video>
         <div className="absolute inset-0 bg-[#2c2420]/50" />
       </div>
 
