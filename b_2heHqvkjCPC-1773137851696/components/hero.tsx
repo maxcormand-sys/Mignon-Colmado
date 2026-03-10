@@ -12,6 +12,7 @@ export function Hero() {
           muted
           loop
           playsInline
+          preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source
@@ -19,17 +20,24 @@ export function Hero() {
             type="video/mp4"
           />
         </video>
-        <div className="absolute inset-0 bg-[#2c2420]/50" />
+        <div className="absolute inset-0 bg-[#2c2420]/40" />
       </div>
+
+      {/* Preload video link for faster loading */}
+      <link
+        rel="preload"
+        as="video"
+        href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mignon_%20Spot%20_%20Horiz%20%281%29%20%281%29-s5HtSlhWAX09d3hRsaV90ycXhUDjQq.mp4"
+      />
 
       {/* Content */}
       <div className="relative flex-1 flex flex-col justify-end px-5 pb-8 md:px-10 md:pb-12 pt-28">
-        {/* Big title */}
-        <div className="flex flex-col gap-4 mb-8 md:mb-10 text-center md:text-left">
-          <span className="text-[10px] md:text-[11px] font-medium uppercase tracking-[0.3em] text-[#fffdf8]/50">
+        {/* Big title - smaller on mobile and positioned lower */}
+        <div className="flex flex-col gap-2 md:gap-4 mb-6 md:mb-10 text-center md:text-left mt-auto">
+          <span className="text-[9px] md:text-[11px] font-medium uppercase tracking-[0.3em] text-[#fffdf8]/50">
             El Colmado dels Objectes Trobats
           </span>
-          <h1 className="font-serif text-[clamp(4.5rem,14vw,9rem)] leading-[0.85] text-[#fffdf8] tracking-[-0.03em]">
+          <h1 className="font-serif text-[clamp(2.5rem,10vw,6rem)] leading-[0.9] text-[#fffdf8] tracking-[-0.02em]">
             <span className="italic">Objectes</span>
             <br />
             amb vida
