@@ -3,28 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Performance optimizations */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  contain: layout style paint;
-}
-
-img {
-  contain: strict;
-}
-
-section {
-  contain: layout style;
-}
-
 :root {
   --background: #fffdf8;
   --foreground: #2c2420;
