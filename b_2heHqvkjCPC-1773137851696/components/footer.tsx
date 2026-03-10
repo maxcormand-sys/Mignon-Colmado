@@ -13,9 +13,9 @@ export function Footer() {
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-kHfGQ8DV6knTZ6CAfqSvZj6Hg6MeG1.png"
                 alt="Mignon"
-                width={180}
-                height={45}
-                className="h-8 md:h-10 w-auto"
+                width={120}
+                height={30}
+                className="w-[100px] md:w-[120px] h-auto"
               />
               <p className="font-serif italic text-lg md:text-xl text-background/50 max-w-[280px] leading-snug">
                 El Colmado dels Objectes Trobats
