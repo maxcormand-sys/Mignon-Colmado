@@ -63,6 +63,7 @@ export function RevealLamps() {
               className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
+              loading="lazy"
             />
             
             {/* With lamp */}
@@ -73,6 +74,7 @@ export function RevealLamps() {
               className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-100" : "opacity-0"
               }`}
+              loading="lazy"
             />
 
             {/* Hint overlay */}
