@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -22,6 +22,7 @@ const lamps = [
 export function RevealLamps() {
   const [activeStates, setActiveStates] = useState<{ [key: number]: boolean }>({})
   const timersRef = useRef<{ [key: number]: ReturnType<typeof setTimeout> }>({})
+  const lastClickRef = useRef<{ [key: number]: number }>({})
 
   useEffect(() => {
     return () => {
@@ -29,32 +30,42 @@ export function RevealLamps() {
     }
   }, [])
 
-  const handleInteraction = (id: number) => {
+  const handleInteraction = useCallback((id: number) => {
+    // Debounce: ignore clicks within 300ms
+    const now = Date.now()
+    if (lastClickRef.current[id] && now - lastClickRef.current[id] < 300) {
+      return
+    }
+    lastClickRef.current[id] = now
+
+    // Clear existing timer
     if (timersRef.current[id]) {
       clearTimeout(timersRef.current[id])
     }
 
+    // Turn on
     setActiveStates(prev => ({ ...prev, [id]: true }))
 
+    // Auto turn off after 2.5s
     timersRef.current[id] = setTimeout(() => {
       setActiveStates(prev => ({ ...prev, [id]: false }))
       delete timersRef.current[id]
     }, 2500)
-  }
+  }, [])
 
-  const handleMouseEnter = (id: number) => {
+  const handleMouseEnter = useCallback((id: number) => {
     if (timersRef.current[id]) {
       clearTimeout(timersRef.current[id])
     }
     setActiveStates(prev => ({ ...prev, [id]: true }))
-  }
+  }, [])
 
-  const handleMouseLeave = (id: number) => {
+  const handleMouseLeave = useCallback((id: number) => {
     if (timersRef.current[id]) {
       clearTimeout(timersRef.current[id])
     }
     setActiveStates(prev => ({ ...prev, [id]: false }))
-  }
+  }, [])
 
   return (
     <section className="relative">
@@ -87,6 +98,7 @@ export function RevealLamps() {
               src={lamp.background}
               alt="Background"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
@@ -97,6 +109,7 @@ export function RevealLamps() {
               src={lamp.withLamp}
               alt={lamp.alt}
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-100" : "opacity-0"
               }`}
@@ -104,7 +117,7 @@ export function RevealLamps() {
             />
 
             <div 
-              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 pointer-events-none ${
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
             >

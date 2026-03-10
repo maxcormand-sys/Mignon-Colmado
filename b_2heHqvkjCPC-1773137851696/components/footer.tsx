@@ -16,7 +16,7 @@ export function Footer() {
                 width={120}
                 height={30}
                 className="w-[100px] md:w-[120px] invert"
-                style={{ height: 'auto' }}
+                style={{ width: 'auto', height: 'auto' }}
               />
               <p className="font-serif italic text-lg md:text-xl text-[#2c2420]/60 max-w-[280px] leading-snug">
                 El Colmado dels Objectes Trobats
@@ -29,6 +29,7 @@ export function Footer() {
                     width={32}
                     height={32}
                     className="object-contain"
+                    style={{ width: 'auto', height: 'auto' }}
                   />
                 </div>
                 <span className="text-[11px] text-[#2c2420]/60">@mignoncolmado</span>
