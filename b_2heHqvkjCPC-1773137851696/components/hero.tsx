@@ -7,15 +7,26 @@ export function Hero() {
     <section className="relative">
       {/* Sticky logo container - stays fixed while scrolling through hero sections */}
       <div className="sticky top-0 h-screen pointer-events-none z-20 flex items-center justify-center">
-        <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-3JKidEghwvs0m1RG08AhgRXPs4rDzj.png"
-          alt="Mignon"
-          width={400}
-          height={100}
-          className="w-[280px] md:w-[400px] h-auto drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]"
-          style={{ filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(0,0,0,0.5))' }}
-          priority
-        />
+        <div className="relative">
+          {/* Background glow for better readability */}
+          <div 
+            className="absolute inset-0 scale-150"
+            style={{ 
+              background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, transparent 70%)',
+            }}
+          />
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-3JKidEghwvs0m1RG08AhgRXPs4rDzj.png"
+            alt="Mignon"
+            width={400}
+            height={100}
+            className="relative w-[280px] md:w-[400px] h-auto"
+            style={{ 
+              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.9)) drop-shadow(0 4px 12px rgba(0,0,0,0.7)) drop-shadow(0 8px 30px rgba(0,0,0,0.5))'
+            }}
+            priority
+          />
+        </div>
       </div>
 
       {/* Video section - full viewport height */}
