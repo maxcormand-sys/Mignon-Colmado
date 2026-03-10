@@ -70,16 +70,16 @@ export function Hero() {
       <div className="relative h-screen grid grid-cols-2">
         <div className="relative h-full">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pCollar%20cristal%20azul-MKOml8hPW4TU6RL0jDCnvBKy7Nu7tc.jpg"
-            alt="Collar de cristal azul sobre tela con flores"
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pJarron%20cristal%20rojo-F9UnWB1dcSaeXJ8LrIBVSsAvthMRyq.jpg"
+            alt="Jarron de cristal rojo sobre tela con flores verdes y blancas"
             fill
             className="object-cover"
           />
         </div>
         <div className="relative h-full">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A8436-0OZr8gjOFr6FKqXbM3ScDwaC38pxWz.jpg"
-            alt="Bolso vintage marron con cadena dorada"
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pPlatos%20duralex%20amarillos-9of4wmhIirKKMQZDatqAoKoSS6O0wI.jpg"
+            alt="Platos Duralex amarillos apilados sobre tela colorida"
             fill
             className="object-cover"
           />
