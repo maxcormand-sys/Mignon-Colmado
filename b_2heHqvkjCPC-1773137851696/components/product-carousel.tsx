@@ -125,31 +125,11 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     }
   }
 
-  // Touch handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
+  // Touch handlers - let native scroll handle it for maximum fluidity
+  const handleTouchStart = () => {
     setIsDragging(true)
     setIsAutoScrolling(false)
-    setStartX(e.touches[0].pageX - (trackRef.current?.offsetLeft || 0))
-    setScrollLeft(trackRef.current?.scrollLeft || 0)
-    lastXRef.current = e.touches[0].pageX
-    lastTimeRef.current = Date.now()
     velocityRef.current = 0
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !trackRef.current) return
-    
-    const x = e.touches[0].pageX - (trackRef.current.offsetLeft || 0)
-    const walk = (x - startX) * 1.5
-    trackRef.current.scrollLeft = scrollLeft - walk
-
-    const now = Date.now()
-    const dt = now - lastTimeRef.current
-    if (dt > 0) {
-      velocityRef.current = (lastXRef.current - e.touches[0].pageX) / dt * 15
-    }
-    lastXRef.current = e.touches[0].pageX
-    lastTimeRef.current = now
   }
 
   const handleTouchEnd = () => {
@@ -208,8 +188,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                 px-4 md:px-6 py-2 md:py-2.5 text-[11px] md:text-[12px] font-medium uppercase tracking-[0.15em] 
                 rounded-full transition-all duration-300 cursor-pointer
                 ${activeFilter === category 
-                  ? "bg-[#2c2420] text-[#fffdf8]" 
-                  : "bg-transparent text-foreground border border-[#2c2420]/30 hover:bg-[#2c2420]/5"
+                  ? "bg-[#b3dfe0] text-[#2c2420]" 
+                  : "bg-transparent text-foreground border border-[#b3dfe0] hover:bg-[#b3dfe0]/20"
                 }
               `}
             >
@@ -241,7 +221,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           
         >
@@ -293,15 +272,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
               </Link>
             </article>
           ))}
-        </div>
-      </div>
-
-      {/* Scroll hint */}
-      <div className="flex justify-center mt-8">
-        <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-          <span className="w-8 h-px bg-border" />
-          <span>Desliza o arrastra</span>
-          <span className="w-8 h-px bg-border" />
         </div>
       </div>
 
