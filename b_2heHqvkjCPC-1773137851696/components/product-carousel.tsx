@@ -4,7 +4,6 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import type { Product } from "@/lib/products"
-import { categories, type Category } from "@/lib/products"
 
 interface ProductCarouselProps {
   products: Product[]
@@ -12,7 +11,6 @@ interface ProductCarouselProps {
 
 export function ProductCarousel({ products }: ProductCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null)
-  const [activeFilter, setActiveFilter] = useState<Category>("Todo")
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
@@ -25,19 +23,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
   const hasDraggedRef = useRef(false)
   const dragStartPosRef = useRef(0)
 
-  const filteredProducts = activeFilter === "Todo" 
-    ? products 
-    : products.filter(p => p.category === activeFilter)
-
-  // Duplicate products for infinite scroll effect
-  const displayProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts]
-
-  // Reset scroll position when filter changes
-  useEffect(() => {
-    if (trackRef.current) {
-      trackRef.current.scrollLeft = 0
-    }
-  }, [activeFilter])
+  // Duplicate products for infinite scroll effect (all products, no filter)
+  const displayProducts = [...products, ...products, ...products]
 
   // Auto-scroll animation
   const animate = useCallback(() => {
@@ -174,29 +161,9 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         <h2 className="font-serif italic text-[clamp(2rem,5vw,3.5rem)] leading-[1] text-foreground tracking-tight mb-4">
           Objectes trobats
         </h2>
-        <p className="text-[14px] text-muted-foreground max-w-md mx-auto mb-8">
+        <p className="text-[14px] text-muted-foreground max-w-md mx-auto">
           Piezas unicas seleccionadas en mercados de toda Europa
         </p>
-
-        {/* Filter tabs */}
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveFilter(category)}
-              className={`
-                px-6 py-3 text-[10px] font-medium uppercase tracking-[0.15em] 
-                rounded-full transition-all duration-300 cursor-pointer
-                ${activeFilter === category 
-                  ? "bg-[#b3dfe0] text-[#2c2420]" 
-                  : "bg-transparent text-foreground border border-[#b3dfe0] hover:bg-[#b3dfe0]/20"
-                }
-              `}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Carousel container */}
