@@ -147,28 +147,32 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
-  // Wheel handler for trackpad - much smoother
+  // Wheel handler for trackpad - using native scroll for maximum fluidity
   const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   
-  const handleWheel = (e: React.WheelEvent) => {
-    if (!trackRef.current) return
-    
-    // Always handle wheel events for smooth trackpad experience
-    e.preventDefault()
-    setIsAutoScrolling(false)
-    
-    // Use both deltaX and deltaY for trackpad flexibility
-    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
-    trackRef.current.scrollLeft += delta * 1.2
-    
-    // Clear existing timeout
-    if (wheelTimeoutRef.current) {
-      clearTimeout(wheelTimeoutRef.current)
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+
+    const handleNativeWheel = (e: WheelEvent) => {
+      // Let the browser handle the scroll natively for smooth trackpad
+      // Only prevent default if it's a vertical scroll we want to convert to horizontal
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && Math.abs(e.deltaY) > 5) {
+        e.preventDefault()
+        track.scrollLeft += e.deltaY
+      }
+      
+      setIsAutoScrolling(false)
+      
+      if (wheelTimeoutRef.current) {
+        clearTimeout(wheelTimeoutRef.current)
+      }
+      wheelTimeoutRef.current = setTimeout(() => setIsAutoScrolling(true), 2500)
     }
-    
-    // Resume auto-scroll after inactivity
-    wheelTimeoutRef.current = setTimeout(() => setIsAutoScrolling(true), 2500)
-  }
+
+    track.addEventListener('wheel', handleNativeWheel, { passive: false })
+    return () => track.removeEventListener('wheel', handleNativeWheel)
+  }, [])
 
   return (
     <section id="coleccion" className="scroll-mt-20 py-12 md:py-20">
@@ -218,9 +222,9 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
           ref={trackRef}
           className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4"
           style={{ 
-            scrollBehavior: isDragging ? 'auto' : 'smooth',
             scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch'
           }}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -229,7 +233,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          onWheel={handleWheel}
+          
         >
           {displayProducts.map((product, index) => (
             <article
