@@ -22,25 +22,35 @@ const lamps = [
 export function RevealLamps() {
   const [activeStates, setActiveStates] = useState<{ [key: number]: boolean }>({})
   const [isMobile, setIsMobile] = useState(false)
-  const touchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const timersRef = useRef<{ [key: number]: ReturnType<typeof setTimeout> }>({})
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
     checkMobile()
     window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
+    return () => {
+      window.removeEventListener("resize", checkMobile)
+      // Cleanup timers on unmount
+      Object.values(timersRef.current).forEach(timer => clearTimeout(timer))
+    }
   }, [])
 
   const handleTouchStart = (id: number) => {
     if (!isMobile) return
     
-    // Clear previous timer if exists
-    if (touchTimerRef.current) {
-      clearTimeout(touchTimerRef.current)
+    // Clear existing timer for this lamp if any
+    if (timersRef.current[id]) {
+      clearTimeout(timersRef.current[id])
     }
 
-    // Toggle state on touch (simple tap = toggle)
-    setActiveStates(prev => ({ ...prev, [id]: !prev[id] }))
+    // Turn on the light immediately
+    setActiveStates(prev => ({ ...prev, [id]: true }))
+
+    // Auto-turn off after 2.5 seconds
+    timersRef.current[id] = setTimeout(() => {
+      setActiveStates(prev => ({ ...prev, [id]: false }))
+      delete timersRef.current[id]
+    }, 2500)
   }
 
   const handleMouseEnter = (id: number) => {
@@ -72,11 +82,11 @@ export function RevealLamps() {
       </div>
 
       {/* Interactive grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 select-none">
         {lamps.map((lamp) => (
           <div
             key={lamp.id}
-            className="relative aspect-[3/4] cursor-pointer overflow-hidden group"
+            className="relative aspect-[3/4] cursor-pointer overflow-hidden group select-none"
             onTouchStart={() => handleTouchStart(lamp.id)}
             onMouseEnter={() => handleMouseEnter(lamp.id)}
             onMouseLeave={() => handleMouseLeave(lamp.id)}
@@ -86,10 +96,11 @@ export function RevealLamps() {
               src={lamp.background}
               alt="Fondo textil vintage"
               fill
-              className={`object-cover transition-opacity duration-500 ${
+              className={`object-cover transition-opacity duration-500 select-none pointer-events-none ${
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
               loading="lazy"
+              draggable={false}
             />
             
             {/* With lamp */}
@@ -97,10 +108,11 @@ export function RevealLamps() {
               src={lamp.withLamp}
               alt={lamp.alt}
               fill
-              className={`object-cover transition-opacity duration-500 ${
+              className={`object-cover transition-opacity duration-500 select-none pointer-events-none ${
                 activeStates[lamp.id] ? "opacity-100" : "opacity-0"
               }`}
               loading="lazy"
+              draggable={false}
             />
 
             {/* Hint overlay */}
