@@ -36,17 +36,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-[#2c2420]/30" />
       </div>
 
-      {/* Shop interior image - full width */}
-      <div className="relative h-screen">
-        <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1-XzPFS5AXf7q2JS2khuuwsw3lZquOdY.jpg"
-          alt="Interior de la tienda Mignon con ceramica, lamparas y objetos vintage"
-          fill
-          className="object-cover"
-        />
-      </div>
-
-      {/* Second row of two images */}
+      {/* Row of two images */}
       <div className="relative h-screen grid grid-cols-2">
         <div className="relative h-full">
           <Image
@@ -64,6 +54,16 @@ export function Hero() {
             className="object-cover"
           />
         </div>
+      </div>
+
+      {/* Shop interior image - full width */}
+      <div className="relative h-screen">
+        <Image
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1-XzPFS5AXf7q2JS2khuuwsw3lZquOdY.jpg"
+          alt="Interior de la tienda Mignon con ceramica, lamparas y objetos vintage"
+          fill
+          className="object-cover"
+        />
       </div>
     </section>
   )
