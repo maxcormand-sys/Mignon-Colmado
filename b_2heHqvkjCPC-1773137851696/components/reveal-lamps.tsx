@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 const lamps = [
   {
@@ -80,6 +81,16 @@ export function RevealLamps() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Catalog button */}
+      <div className="bg-background px-6 py-12 md:py-16 flex justify-center">
+        <Link
+          href="/cataleg"
+          className="inline-flex items-center gap-3 px-8 py-4 bg-[#b3dfe0] text-[#2c2420] text-[11px] md:text-[12px] font-medium uppercase tracking-[0.2em] rounded-full hover:bg-[#9dd1d3] transition-colors"
+        >
+          Explorar tota la col·leccio
+        </Link>
       </div>
     </section>
   )
