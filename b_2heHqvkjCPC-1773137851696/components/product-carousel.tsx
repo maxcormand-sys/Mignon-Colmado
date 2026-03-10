@@ -125,31 +125,11 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     }
   }
 
-  // Touch handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
+  // Touch handlers - let native scroll handle it for maximum fluidity
+  const handleTouchStart = () => {
     setIsDragging(true)
     setIsAutoScrolling(false)
-    setStartX(e.touches[0].pageX - (trackRef.current?.offsetLeft || 0))
-    setScrollLeft(trackRef.current?.scrollLeft || 0)
-    lastXRef.current = e.touches[0].pageX
-    lastTimeRef.current = Date.now()
     velocityRef.current = 0
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !trackRef.current) return
-    
-    const x = e.touches[0].pageX - (trackRef.current.offsetLeft || 0)
-    const walk = (x - startX) * 1.5
-    trackRef.current.scrollLeft = scrollLeft - walk
-
-    const now = Date.now()
-    const dt = now - lastTimeRef.current
-    if (dt > 0) {
-      velocityRef.current = (lastXRef.current - e.touches[0].pageX) / dt * 15
-    }
-    lastXRef.current = e.touches[0].pageX
-    lastTimeRef.current = now
   }
 
   const handleTouchEnd = () => {
@@ -241,7 +221,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           
         >
