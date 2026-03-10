@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import type { Product } from "@/lib/products"
 import { categories, type Category } from "@/lib/products"
 
@@ -21,6 +22,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
   const velocityRef = useRef(0)
   const lastTimeRef = useRef(0)
   const lastXRef = useRef(0)
+  const hasDraggedRef = useRef(false)
+  const dragStartPosRef = useRef(0)
 
   const filteredProducts = activeFilter === "Todo" 
     ? products 
@@ -83,6 +86,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     lastXRef.current = e.pageX
     lastTimeRef.current = Date.now()
     velocityRef.current = 0
+    hasDraggedRef.current = false
+    dragStartPosRef.current = e.pageX
   }
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -92,6 +97,11 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     const x = e.pageX - (trackRef.current.offsetLeft || 0)
     const walk = (x - startX) * 1.5
     trackRef.current.scrollLeft = scrollLeft - walk
+
+    // Mark as dragged if moved more than 5px
+    if (Math.abs(e.pageX - dragStartPosRef.current) > 5) {
+      hasDraggedRef.current = true
+    }
 
     // Calculate velocity for momentum
     const now = Date.now()
@@ -242,32 +252,43 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
               onMouseEnter={() => setActiveIndex(index)}
               onMouseLeave={() => setActiveIndex(null)}
             >
-              {/* Image container - only photo */}
-              <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded-lg">
-                <Image
-                  src={
-                    product.imageAlt && activeIndex === index
-                      ? product.imageAlt
-                      : product.image
+              <Link
+                href={`/producto/${product.id}`}
+                onClick={(e) => {
+                  if (hasDraggedRef.current) {
+                    e.preventDefault()
                   }
-                  alt={product.name}
-                  fill
-                  className={`object-cover transition-transform duration-700 ease-out pointer-events-none ${
-                    activeIndex === index ? "scale-105" : "scale-100"
-                  }`}
-                  sizes="(max-width: 640px) 280px, 340px"
-                  draggable={false}
-                />
+                }}
+                draggable={false}
+                className="block"
+              >
+                {/* Image container - only photo */}
+                <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded-lg">
+                  <Image
+                    src={
+                      product.imageAlt && activeIndex === index
+                        ? product.imageAlt
+                        : product.image
+                    }
+                    alt={product.name}
+                    fill
+                    className={`object-cover transition-transform duration-700 ease-out pointer-events-none ${
+                      activeIndex === index ? "scale-105" : "scale-100"
+                    }`}
+                    sizes="(max-width: 640px) 280px, 340px"
+                    draggable={false}
+                  />
 
-                {/* Sold overlay */}
-                {product.sold && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-background/90 backdrop-blur-sm">
-                    <span className="text-[12px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                      Vendido
-                    </span>
-                  </div>
-                )}
-              </div>
+                  {/* Sold overlay */}
+                  {product.sold && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/90 backdrop-blur-sm">
+                      <span className="text-[12px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                        Vendido
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </Link>
             </article>
           ))}
         </div>
