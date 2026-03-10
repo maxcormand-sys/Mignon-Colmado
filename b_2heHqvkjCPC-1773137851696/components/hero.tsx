@@ -18,7 +18,13 @@ export function Hero() {
             priority
           />
           <span 
-            className="font-serif italic text-[12px] md:text-[16px] text-[#fffdf8]/90 tracking-wide text-center"
+            className="font-serif italic text-[12px] text-[#fffdf8]/90 tracking-wide text-center md:hidden"
+            style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6)' }}
+          >
+            La nostra botiga, ara online
+          </span>
+          <span 
+            className="font-serif italic text-[16px] text-[#fffdf8]/90 tracking-wide text-center hidden md:block"
             style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6)' }}
           >
             La nostra botiga de Barcelona, ara disponible online
