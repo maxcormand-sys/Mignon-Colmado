@@ -10,9 +10,13 @@ export function Footer() {
           <div className="grid md:grid-cols-12 gap-10 md:gap-6">
             {/* Left: brand + tagline */}
             <div className="md:col-span-5 flex flex-col gap-4">
-              <span className="text-3xl md:text-4xl font-bold tracking-[-0.04em] uppercase">
-                Mignon
-              </span>
+              <Image
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-kHfGQ8DV6knTZ6CAfqSvZj6Hg6MeG1.png"
+                alt="Mignon"
+                width={180}
+                height={45}
+                className="h-8 md:h-10 w-auto"
+              />
               <p className="font-serif italic text-lg md:text-xl text-background/50 max-w-[280px] leading-snug">
                 El Colmado dels Objectes Trobats
               </p>
