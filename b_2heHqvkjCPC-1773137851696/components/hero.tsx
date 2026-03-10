@@ -67,8 +67,14 @@ export function Hero() {
   useEffect(() => {
     let rafId: number
     let lastProgress = -1
+    let lastTime = 0
 
     const handleScroll = () => {
+      const now = Date.now()
+      // Throttle to 60fps (16ms)
+      if (now - lastTime < 16) return
+      lastTime = now
+
       if (!sectionRef.current) return
       
       const rect = sectionRef.current.getBoundingClientRect()
@@ -131,6 +137,7 @@ export function Hero() {
               width={400}
               height={100}
               className="w-[200px] md:w-[400px] h-auto will-change-[filter]"
+              style={{ width: 'auto', height: 'auto' }}
               priority
             />
             <span 

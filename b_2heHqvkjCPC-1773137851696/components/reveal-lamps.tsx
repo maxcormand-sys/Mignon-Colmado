@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback, memo } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -19,6 +19,50 @@ const lamps = [
   },
 ]
 
+const LampCard = memo(({ lamp, isActive, onInteraction, onMouseEnter, onMouseLeave }: any) => (
+  <div
+    className="relative aspect-[3/4] cursor-pointer overflow-hidden"
+    onClick={() => onInteraction(lamp.id)}
+    onMouseEnter={() => onMouseEnter(lamp.id)}
+    onMouseLeave={() => onMouseLeave(lamp.id)}
+    style={{ userSelect: "none", WebkitUserSelect: "none", WebkitTouchCallout: "none" }}
+  >
+    <Image
+      src={lamp.background}
+      alt="Background"
+      fill
+      className={`object-cover transition-opacity duration-500 ${
+        isActive ? "opacity-0" : "opacity-100"
+      }`}
+      sizes="(max-width: 768px) 100vw, 50vw"
+      loading="lazy"
+    />
+    
+    <Image
+      src={lamp.withLamp}
+      alt={lamp.alt}
+      fill
+      className={`object-cover transition-opacity duration-500 ${
+        isActive ? "opacity-100" : "opacity-0"
+      }`}
+      sizes="(max-width: 768px) 100vw, 50vw"
+      loading="lazy"
+    />
+
+    <div 
+      className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+        isActive ? "opacity-0" : "opacity-100"
+      }`}
+    >
+      <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#2c2420] flex items-center justify-center shadow-lg">
+        <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#fffdf8]" />
+      </div>
+    </div>
+  </div>
+))
+
+LampCard.displayName = "LampCard"
+
 export function RevealLamps() {
   const [activeStates, setActiveStates] = useState<{ [key: number]: boolean }>({})
   const timersRef = useRef<{ [key: number]: ReturnType<typeof setTimeout> }>({})
@@ -29,7 +73,7 @@ export function RevealLamps() {
     }
   }, [])
 
-  const handleInteraction = (id: number) => {
+  const handleInteraction = useCallback((id: number) => {
     if (timersRef.current[id]) {
       clearTimeout(timersRef.current[id])
     }
@@ -40,21 +84,21 @@ export function RevealLamps() {
       setActiveStates(prev => ({ ...prev, [id]: false }))
       delete timersRef.current[id]
     }, 2500)
-  }
+  }, [])
 
-  const handleMouseEnter = (id: number) => {
+  const handleMouseEnter = useCallback((id: number) => {
     if (timersRef.current[id]) {
       clearTimeout(timersRef.current[id])
     }
     setActiveStates(prev => ({ ...prev, [id]: true }))
-  }
+  }, [])
 
-  const handleMouseLeave = (id: number) => {
+  const handleMouseLeave = useCallback((id: number) => {
     if (timersRef.current[id]) {
       clearTimeout(timersRef.current[id])
     }
     setActiveStates(prev => ({ ...prev, [id]: false }))
-  }
+  }, [])
 
   return (
     <section className="relative">
@@ -75,44 +119,14 @@ export function RevealLamps() {
 
       <div className="grid grid-cols-1 md:grid-cols-2">
         {lamps.map((lamp) => (
-          <div
+          <LampCard
             key={lamp.id}
-            className="relative aspect-[3/4] cursor-pointer overflow-hidden"
-            onClick={() => handleInteraction(lamp.id)}
-            onMouseEnter={() => handleMouseEnter(lamp.id)}
-            onMouseLeave={() => handleMouseLeave(lamp.id)}
-            style={{ userSelect: "none", WebkitUserSelect: "none", WebkitTouchCallout: "none" }}
-          >
-            <Image
-              src={lamp.background}
-              alt="Background"
-              fill
-              className={`object-cover transition-opacity duration-500 ${
-                activeStates[lamp.id] ? "opacity-0" : "opacity-100"
-              }`}
-              loading="lazy"
-            />
-            
-            <Image
-              src={lamp.withLamp}
-              alt={lamp.alt}
-              fill
-              className={`object-cover transition-opacity duration-500 ${
-                activeStates[lamp.id] ? "opacity-100" : "opacity-0"
-              }`}
-              loading="lazy"
-            />
-
-            <div 
-              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
-                activeStates[lamp.id] ? "opacity-0" : "opacity-100"
-              }`}
-            >
-              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#2c2420] flex items-center justify-center shadow-lg">
-                <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#fffdf8]" />
-              </div>
-            </div>
-          </div>
+            lamp={lamp}
+            isActive={activeStates[lamp.id] || false}
+            onInteraction={handleInteraction}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
         ))}
       </div>
     </section>
