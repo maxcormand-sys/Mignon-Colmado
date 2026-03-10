@@ -296,15 +296,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         </div>
       </div>
 
-      {/* Scroll hint */}
-      <div className="flex justify-center mt-8">
-        <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-          <span className="w-8 h-px bg-border" />
-          <span>Desliza o arrastra</span>
-          <span className="w-8 h-px bg-border" />
-        </div>
-      </div>
-
       {/* Hide scrollbar globally for this component */}
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar {

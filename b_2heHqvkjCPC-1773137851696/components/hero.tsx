@@ -7,15 +7,23 @@ export function Hero() {
     <section className="relative">
       {/* Sticky logo container - stays fixed while scrolling through hero sections */}
       <div className="sticky top-0 h-screen pointer-events-none z-20 flex items-center justify-center">
-        <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-3JKidEghwvs0m1RG08AhgRXPs4rDzj.png"
-          alt="Mignon"
-          width={400}
-          height={100}
-          className="w-[200px] md:w-[400px] h-auto drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]"
-          style={{ filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(0,0,0,0.5))' }}
-          priority
-        />
+        <div className="flex flex-col items-center gap-2 md:gap-3">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-3JKidEghwvs0m1RG08AhgRXPs4rDzj.png"
+            alt="Mignon"
+            width={400}
+            height={100}
+            className="w-[200px] md:w-[400px] h-auto drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]"
+            style={{ filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(0,0,0,0.5))' }}
+            priority
+          />
+          <span 
+            className="text-[10px] md:text-[12px] font-medium uppercase tracking-[0.3em] text-[#fffdf8]/90"
+            style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6)' }}
+          >
+            Objectes amb historia
+          </span>
+        </div>
       </div>
 
       {/* Video section - full viewport height */}
