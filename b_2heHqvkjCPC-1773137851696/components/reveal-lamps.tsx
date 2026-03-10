@@ -21,55 +21,42 @@ const lamps = [
 
 export function RevealLamps() {
   const [activeStates, setActiveStates] = useState<{ [key: number]: boolean }>({})
-  const [mounted, setMounted] = useState(false)
   const timersRef = useRef<{ [key: number]: ReturnType<typeof setTimeout> }>({})
 
   useEffect(() => {
-    setMounted(true)
     return () => {
       Object.values(timersRef.current).forEach(timer => clearTimeout(timer))
     }
   }, [])
 
-  const handleLampClick = (id: number, e: React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    
-    // Clear existing timer for this lamp if any
+  const handleClick = (id: number) => {
+    // Clear existing timer
     if (timersRef.current[id]) {
       clearTimeout(timersRef.current[id])
     }
 
-    // Turn on the light immediately
+    // Turn on immediately
     setActiveStates(prev => ({ ...prev, [id]: true }))
 
-    // Auto-turn off after 2.5 seconds
+    // Auto off after 2.5 seconds
     timersRef.current[id] = setTimeout(() => {
       setActiveStates(prev => ({ ...prev, [id]: false }))
       delete timersRef.current[id]
     }, 2500)
   }
 
-  // Only render interactive content after hydration to avoid mismatch
-  if (!mounted) {
-    return (
-      <section className="relative">
-        <div className="bg-background px-6 py-12 md:py-16 text-center">
-          <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-foreground/40 block mb-3">
-            Descobreix
-          </span>
-          <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em] mb-6">
-            Prem per encendre
-          </h2>
-          <Link
-            href="/cataleg"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#b3dfe0] text-[#2c2420] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors"
-          >
-            Explorar col·leccio
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 bg-foreground/5 aspect-[3/4]" />
-      </section>
-    )
+  const handleMouseEnter = (id: number) => {
+    if (timersRef.current[id]) {
+      clearTimeout(timersRef.current[id])
+    }
+    setActiveStates(prev => ({ ...prev, [id]: true }))
+  }
+
+  const handleMouseLeave = (id: number) => {
+    if (timersRef.current[id]) {
+      clearTimeout(timersRef.current[id])
+    }
+    setActiveStates(prev => ({ ...prev, [id]: false }))
   }
 
   return (
@@ -95,9 +82,10 @@ export function RevealLamps() {
         {lamps.map((lamp) => (
           <div
             key={lamp.id}
-            className="relative aspect-[3/4] cursor-pointer overflow-hidden group select-none touch-none"
-            onClick={(e) => handleLampClick(lamp.id, e)}
-            onTouchEnd={(e) => handleLampClick(lamp.id, e)}
+            className="relative aspect-[3/4] cursor-pointer overflow-hidden group select-none"
+            onClick={() => handleClick(lamp.id)}
+            onMouseEnter={() => handleMouseEnter(lamp.id)}
+            onMouseLeave={() => handleMouseLeave(lamp.id)}
           >
             {/* Background only */}
             <Image
