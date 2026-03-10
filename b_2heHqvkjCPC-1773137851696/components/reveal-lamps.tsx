@@ -88,16 +88,17 @@ export function RevealLamps() {
         {lamps.map((lamp) => (
           <div
             key={lamp.id}
-            className="relative aspect-[3/4] cursor-pointer overflow-hidden select-none"
+            className="relative aspect-[3/4] cursor-pointer overflow-hidden"
             onClick={() => handleInteraction(lamp.id)}
             onMouseEnter={() => handleMouseEnter(lamp.id)}
             onMouseLeave={() => handleMouseLeave(lamp.id)}
+            style={{ userSelect: "none", WebkitUserSelect: "none", WebkitTouchCallout: "none" }}
           >
             <Image
               src={lamp.background}
               alt="Background"
               fill
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="100vw"
               className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
@@ -108,7 +109,7 @@ export function RevealLamps() {
               src={lamp.withLamp}
               alt={lamp.alt}
               fill
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="100vw"
               className={`object-cover transition-opacity duration-500 ${
                 activeStates[lamp.id] ? "opacity-100" : "opacity-0"
               }`}
