@@ -84,7 +84,7 @@ export default function ProductPage() {
         <div className="grid lg:grid-cols-2 min-h-[calc(100vh-4rem)]">
           {/* Image section */}
           <div className="relative bg-muted">
-            <div className="sticky top-16 h-[60vh] lg:h-[calc(100vh-4rem)]">
+            <div className="sticky top-16 h-[60vh] lg:h-[calc(100vh-4rem)] relative">
               <Image
                 src={activeImage === "alt" && product.imageAlt ? product.imageAlt : product.image}
                 alt={product.name}
