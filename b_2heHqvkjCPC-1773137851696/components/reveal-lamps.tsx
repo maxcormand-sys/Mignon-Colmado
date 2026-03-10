@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -21,9 +21,36 @@ const lamps = [
 
 export function RevealLamps() {
   const [activeStates, setActiveStates] = useState<{ [key: number]: boolean }>({})
+  const [isMobile, setIsMobile] = useState(false)
+  const touchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const handleInteraction = (id: number, isActive: boolean) => {
-    setActiveStates(prev => ({ ...prev, [id]: isActive }))
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  const handleTouchStart = (id: number) => {
+    if (!isMobile) return
+    
+    // Clear previous timer if exists
+    if (touchTimerRef.current) {
+      clearTimeout(touchTimerRef.current)
+    }
+
+    // Toggle state on touch (simple tap = toggle)
+    setActiveStates(prev => ({ ...prev, [id]: !prev[id] }))
+  }
+
+  const handleMouseEnter = (id: number) => {
+    if (isMobile) return
+    setActiveStates(prev => ({ ...prev, [id]: true }))
+  }
+
+  const handleMouseLeave = (id: number) => {
+    if (isMobile) return
+    setActiveStates(prev => ({ ...prev, [id]: false }))
   }
 
   return (
@@ -50,10 +77,9 @@ export function RevealLamps() {
           <div
             key={lamp.id}
             className="relative aspect-[3/4] cursor-pointer overflow-hidden group"
-            onTouchStart={() => handleInteraction(lamp.id, true)}
-            onTouchEnd={() => handleInteraction(lamp.id, false)}
-            onMouseEnter={() => handleInteraction(lamp.id, true)}
-            onMouseLeave={() => handleInteraction(lamp.id, false)}
+            onTouchStart={() => handleTouchStart(lamp.id)}
+            onMouseEnter={() => handleMouseEnter(lamp.id)}
+            onMouseLeave={() => handleMouseLeave(lamp.id)}
           >
             {/* Background only */}
             <Image
