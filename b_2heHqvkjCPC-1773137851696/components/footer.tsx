@@ -21,12 +21,13 @@ export function Footer() {
                 El Colmado dels Objectes Trobats
               </p>
               <div className="flex items-center gap-3 mt-2">
-                <div className="h-8 w-8 rounded-full overflow-hidden relative">
+                <div className="h-8 w-8 overflow-hidden relative flex items-center justify-center">
                   <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/_MIGNON%20Insta3%20%285%29-rCeWh2UV3jgz1Evz85Yebv9wrpkpRw.jpg"
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%201-OX5mRAmNLb4WFPqha31K2hpoD3lai6.png"
                     alt="Mignon logo"
-                    fill
-                    className="object-cover"
+                    width={32}
+                    height={32}
+                    className="object-contain"
                   />
                 </div>
                 <span className="text-[11px] text-[#2c2420]/60">@mignoncolmado</span>
