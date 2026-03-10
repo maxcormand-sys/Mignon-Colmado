@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/hero"
 
 import { ProductGrid } from "@/components/product-grid"
@@ -10,7 +9,6 @@ import { CartSheet } from "@/components/cart-sheet"
 export default function HomePage() {
   return (
     <>
-      <Navbar />
       <main>
         <Hero />
         <ProductGrid />

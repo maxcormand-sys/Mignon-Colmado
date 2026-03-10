@@ -12,7 +12,8 @@ export function Hero() {
           alt="Mignon"
           width={400}
           height={100}
-          className="w-[280px] md:w-[400px] h-auto"
+          className="w-[280px] md:w-[400px] h-auto drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]"
+          style={{ filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(0,0,0,0.5))' }}
           priority
         />
       </div>
@@ -44,7 +45,6 @@ export function Hero() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative h-full">
           <Image
@@ -53,7 +53,6 @@ export function Hero() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/50" />
         </div>
       </div>
 
@@ -65,7 +64,6 @@ export function Hero() {
           fill
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-black/50" />
       </div>
 
       {/* Second row of two images */}
@@ -77,7 +75,6 @@ export function Hero() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative h-full">
           <Image
@@ -86,7 +83,6 @@ export function Hero() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/50" />
         </div>
       </div>
     </section>
