@@ -176,7 +176,7 @@ export default function AboutPage() {
             </div>
             <Link
               href="/#coleccion"
-              className="bg-accent-foreground text-accent px-8 py-3 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-foreground transition-colors"
+              className="bg-accent-foreground text-accent px-6 py-3 text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-foreground transition-colors"
             >
               Ver la coleccion
             </Link>

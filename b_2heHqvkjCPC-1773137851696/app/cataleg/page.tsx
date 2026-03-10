@@ -58,7 +58,7 @@ export default function CatalegPage() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-5 py-2.5 text-[10px] md:text-[11px] uppercase tracking-[0.2em] rounded-full transition-all duration-300 ${
+                className={`px-6 py-3 text-[10px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 ${
                   activeCategory === category
                     ? "bg-[#2c2420] text-[#fffdf8]"
                     : "bg-[#b3dfe0]/30 text-foreground/70 hover:bg-[#b3dfe0]/60"
@@ -170,7 +170,7 @@ export default function CatalegPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#2c2420] text-[#fffdf8] text-[11px] font-medium uppercase tracking-[0.2em] rounded-full hover:bg-[#2c2420]/90 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#2c2420] text-[#fffdf8] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#2c2420]/90 transition-colors"
           >
             Contacta amb nosaltres
           </Link>
