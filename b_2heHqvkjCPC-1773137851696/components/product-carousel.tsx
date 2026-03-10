@@ -241,14 +241,10 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                 draggable={false}
                 className="block"
               >
-                {/* Image container - only photo */}
+                {/* Image container - only photo, no hover change */}
                 <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded-lg">
                   <Image
-                    src={
-                      product.imageAlt && activeIndex === index
-                        ? product.imageAlt
-                        : product.image
-                    }
+                    src={product.image}
                     alt={product.name}
                     fill
                     className={`object-cover transition-transform duration-700 ease-out pointer-events-none ${

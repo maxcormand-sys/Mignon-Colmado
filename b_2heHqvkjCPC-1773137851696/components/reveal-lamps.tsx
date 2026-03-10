@@ -73,15 +73,9 @@ export function RevealLamps() {
         <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-foreground/40 block mb-3">
           Descobreix
         </span>
-        <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em] mb-6">
+        <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em]">
           Prem per encendre
         </h2>
-        <Link
-          href="/cataleg"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#b3dfe0] text-[#2c2420] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors"
-        >
-          Explorar col·leccio
-        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2">
@@ -127,6 +121,16 @@ export function RevealLamps() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Button below carousel */}
+      <div className="bg-background px-6 py-10 md:py-14 text-center">
+        <Link
+          href="/cataleg"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#b3dfe0] text-[#2c2420] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors"
+        >
+          Explorar col·leccio
+        </Link>
       </div>
     </section>
   )
