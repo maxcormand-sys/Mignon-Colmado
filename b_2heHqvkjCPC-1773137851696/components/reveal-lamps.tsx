@@ -33,9 +33,15 @@ export function RevealLamps() {
         <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-foreground/40 block mb-3">
           Descobreix
         </span>
-        <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em]">
+        <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em] mb-6">
           Prem per encendre
         </h2>
+        <Link
+          href="/cataleg"
+          className="inline-flex items-center gap-3 px-8 py-4 bg-[#b3dfe0] text-[#2c2420] text-[11px] md:text-[12px] font-medium uppercase tracking-[0.2em] rounded-full hover:bg-[#9dd1d3] transition-colors"
+        >
+          Explorar tota la col·leccio
+        </Link>
       </div>
 
       {/* Interactive grid */}
@@ -81,16 +87,6 @@ export function RevealLamps() {
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Catalog button */}
-      <div className="bg-background px-6 py-12 md:py-16 flex justify-center">
-        <Link
-          href="/cataleg"
-          className="inline-flex items-center gap-3 px-8 py-4 bg-[#b3dfe0] text-[#2c2420] text-[11px] md:text-[12px] font-medium uppercase tracking-[0.2em] rounded-full hover:bg-[#9dd1d3] transition-colors"
-        >
-          Explorar tota la col·leccio
-        </Link>
       </div>
     </section>
   )
