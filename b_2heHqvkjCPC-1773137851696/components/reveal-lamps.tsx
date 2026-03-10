@@ -81,7 +81,7 @@ export function RevealLamps() {
             onClick={() => handleInteraction(lamp.id)}
             onMouseEnter={() => handleMouseEnter(lamp.id)}
             onMouseLeave={() => handleMouseLeave(lamp.id)}
-            style={{ userSelect: "none" }}
+            style={{ userSelect: "none", WebkitUserSelect: "none", WebkitTouchCallout: "none" }}
           >
             <Image
               src={lamp.background}
