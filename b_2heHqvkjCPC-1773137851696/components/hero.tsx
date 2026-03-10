@@ -7,7 +7,7 @@ export function Hero() {
     <section className="relative">
       {/* Sticky logo container - stays fixed while scrolling through hero sections */}
       <div className="sticky top-0 h-screen pointer-events-none z-20 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-2 md:gap-3">
+        <div className="flex flex-col items-center gap-0 md:gap-1">
           <Image
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-3JKidEghwvs0m1RG08AhgRXPs4rDzj.png"
             alt="Mignon"

@@ -4,7 +4,7 @@ import Image from "next/image"
 export function Footer() {
   return (
     <footer className="relative overflow-hidden">
-      <div className="bg-foreground text-background">
+      <div className="bg-[#4A9B9B] text-[#fffdf8]">
         {/* Main footer content */}
         <div className="px-5 md:px-10 pt-14 md:pt-20 pb-10">
           <div className="grid md:grid-cols-12 gap-10 md:gap-6">
@@ -17,7 +17,7 @@ export function Footer() {
                 height={30}
                 className="w-[100px] md:w-[120px] h-auto"
               />
-              <p className="font-serif italic text-lg md:text-xl text-background/50 max-w-[280px] leading-snug">
+              <p className="font-serif italic text-lg md:text-xl text-[#fffdf8]/60 max-w-[280px] leading-snug">
                 El Colmado dels Objectes Trobats
               </p>
               <div className="flex items-center gap-3 mt-2">
@@ -29,31 +29,31 @@ export function Footer() {
                     className="object-cover"
                   />
                 </div>
-                <span className="text-[11px] text-background/40">@mignoncolmado</span>
+                <span className="text-[11px] text-[#fffdf8]/50">@mignoncolmado</span>
               </div>
             </div>
 
             {/* Middle: navigation */}
             <div className="md:col-span-3 flex flex-col gap-3">
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-background/30">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#fffdf8]/40">
                 Navegar
               </span>
               <nav className="flex flex-col gap-2.5">
                 <Link
                   href="/"
-                  className="text-[13px] text-background/60 hover:text-background transition-colors"
+                  className="text-[13px] text-[#fffdf8]/70 hover:text-[#fffdf8] transition-colors"
                 >
                   Tienda
                 </Link>
                 <Link
                   href="/about"
-                  className="text-[13px] text-background/60 hover:text-background transition-colors"
+                  className="text-[13px] text-[#fffdf8]/70 hover:text-[#fffdf8] transition-colors"
                 >
                   Nosotros
                 </Link>
                 <Link
                   href="/#coleccion"
-                  className="text-[13px] text-background/60 hover:text-background transition-colors"
+                  className="text-[13px] text-[#fffdf8]/70 hover:text-[#fffdf8] transition-colors"
                 >
                   Coleccion
                 </Link>
@@ -62,15 +62,15 @@ export function Footer() {
 
             {/* Right: contact */}
             <div className="md:col-span-4 flex flex-col gap-3">
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-background/30">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#fffdf8]/40">
                 Visita el colmado
               </span>
-              <div className="flex flex-col gap-2.5 text-[13px] text-background/60">
+              <div className="flex flex-col gap-2.5 text-[13px] text-[#fffdf8]/70">
                 <span>C/ Diluvi, 11</span>
                 <span>Barcelona</span>
                 <span className="mt-1">hola@mignoncolmado.com</span>
               </div>
-              <div className="flex flex-col gap-1 mt-3 text-[11px] text-background/30">
+              <div className="flex flex-col gap-1 mt-3 text-[11px] text-[#fffdf8]/40">
                 <span>Envios a toda Espana</span>
                 <span>Recogida en tienda disponible</span>
               </div>
@@ -79,11 +79,11 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="px-5 md:px-10 py-5 border-t border-background/10 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-          <p className="text-[10px] text-background/25 tracking-wide">
+        <div className="px-5 md:px-10 py-5 border-t border-[#fffdf8]/15 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+          <p className="text-[10px] text-[#fffdf8]/35 tracking-wide">
             &copy; {new Date().getFullYear()} Mignon -- Barcelona
           </p>
-          <p className="text-[10px] text-background/25 tracking-wide">
+          <p className="text-[10px] text-[#fffdf8]/35 tracking-wide">
             Objectes amb vida des de 2020
           </p>
         </div>

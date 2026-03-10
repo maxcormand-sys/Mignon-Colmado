@@ -13,21 +13,6 @@ export default function HomePage() {
         <Hero />
         <ProductGrid />
 
-        {/* Callout band */}
-        <section className="bg-secondary">
-          <div className="px-5 md:px-10 py-12 md:py-16 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <h3 className="font-serif italic text-[clamp(1.8rem,4vw,3rem)] leading-[0.92] text-secondary-foreground tracking-[-0.01em]">
-              Ven a descubrir
-              <br className="hidden md:block" />{" "}
-              el colmado
-            </h3>
-            <div className="flex flex-col gap-2 text-[12px] text-secondary-foreground/70">
-              <span>C/ Diluvi, 11 -- Barcelona</span>
-              <span>De martes a sabado, 11h - 14h / 17h - 20h</span>
-            </div>
-          </div>
-        </section>
-
       </main>
       <Footer />
       <CartSheet />
