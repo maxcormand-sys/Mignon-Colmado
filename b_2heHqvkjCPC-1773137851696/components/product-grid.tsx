@@ -1,6 +1,6 @@
 "use client"
 
-import { products, categories, type Category } from "@/lib/products"
+import { products } from "@/lib/products"
 import { ProductCarousel } from "@/components/product-carousel"
 
 export function ProductGrid() {
@@ -8,60 +8,60 @@ export function ProductGrid() {
   const iluminacion = products.filter((p) => p.category === "Iluminacion")
   const ceramica = products.filter((p) => p.category === "Ceramica")
   const figuras = products.filter((p) => p.category === "Figuras")
+  
+  // Combine smaller categories
+  const decoracion = [...ceramica, ...figuras]
 
   return (
-    <section id="coleccion" className="scroll-mt-20">
-      {/* Section header */}
-      <div className="px-5 md:px-10 pt-16 md:pt-24 pb-4">
-        <div className="flex flex-col gap-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-accent">
-            Coleccion
+    <section id="coleccion" className="scroll-mt-20 py-16 md:py-24">
+      {/* Main header */}
+      <div className="px-5 md:px-10 mb-16 md:mb-24">
+        <div className="max-w-2xl">
+          <span className="text-[9px] font-medium uppercase tracking-[0.35em] text-muted-foreground block mb-3">
+            Nuestra coleccion
           </span>
-          <h2 className="font-serif italic text-[clamp(2.2rem,5vw,3.8rem)] leading-[0.9] text-foreground tracking-[-0.02em]">
+          <h2 className="font-serif italic text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.9] text-foreground tracking-[-0.02em] mb-6">
             Objectes trobats
           </h2>
+          <p className="text-[14px] md:text-[15px] text-muted-foreground leading-relaxed max-w-md">
+            Piezas unicas de diferentes epocas, seleccionadas con cuidado en mercados de toda Europa.
+          </p>
         </div>
       </div>
 
-      {/* Carousels by category */}
-      {iluminacion.length > 0 && (
+      {/* Featured: Iluminacion - larger cards */}
+      <div className="mb-16 md:mb-24">
         <ProductCarousel
           products={iluminacion}
-          title="Iluminacion vintage"
-          subtitle="Lamparas unicas"
+          title="Iluminacion"
+          subtitle="Coleccion destacada"
           direction="left"
-          speed={0.4}
+          speed={0.25}
+          variant="featured"
         />
-      )}
+      </div>
 
-      {ceramica.length > 0 && (
+      {/* Decoracion - default cards */}
+      <div className="mb-16 md:mb-24">
         <ProductCarousel
-          products={ceramica}
-          title="Ceramica artesanal"
-          subtitle="Piezas de coleccion"
+          products={decoracion}
+          title="Ceramica y figuras"
+          subtitle="Detalles con caracter"
           direction="right"
           speed={0.35}
+          variant="default"
         />
-      )}
+      </div>
 
-      {figuras.length > 0 && (
-        <ProductCarousel
-          products={figuras}
-          title="Figuras decorativas"
-          subtitle="Detalles con caracter"
-          direction="left"
-          speed={0.45}
-        />
-      )}
-
-      {/* All products carousel */}
-      <div className="border-t border-border mt-8">
+      {/* All products - minimal style, faster */}
+      <div className="border-t border-border pt-16 md:pt-20">
         <ProductCarousel
           products={products}
-          title="Todas las piezas"
-          subtitle="Descubre todo"
-          direction="right"
-          speed={0.3}
+          title="Todo el catalogo"
+          subtitle="Explora"
+          direction="left"
+          speed={0.4}
+          variant="minimal"
         />
       </div>
     </section>

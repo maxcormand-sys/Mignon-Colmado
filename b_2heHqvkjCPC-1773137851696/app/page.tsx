@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/hero"
-import { MarqueeBand } from "@/components/marquee-band"
+
 import { ProductGrid } from "@/components/product-grid"
 import { Footer } from "@/components/footer"
 import { CartSheet } from "@/components/cart-sheet"
@@ -13,7 +13,6 @@ export default function HomePage() {
       <Navbar />
       <main>
         <Hero />
-        <MarqueeBand />
         <ProductGrid />
 
         {/* Editorial collage section */}
