@@ -152,7 +152,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
   }, [])
 
   return (
-    <section id="coleccion" className="scroll-mt-20 py-12 md:py-20">
+    <section id="coleccion" className="scroll-mt-20 pt-6 md:pt-10 pb-12 md:pb-20">
       {/* Header */}
       <div className="px-5 md:px-10 mb-10 md:mb-14 text-center">
         <span className="inline-block text-[10px] font-medium uppercase tracking-[0.4em] text-muted-foreground mb-4 px-4 py-1.5 border border-border rounded-full">

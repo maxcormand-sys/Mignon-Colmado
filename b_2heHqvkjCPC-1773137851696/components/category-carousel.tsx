@@ -178,7 +178,7 @@ export function CategoryCarousel() {
   }
 
   return (
-    <section className="py-12 md:py-20 bg-white">
+    <section className="pt-12 md:pt-20 pb-6 md:pb-10 bg-white">
       {/* Header */}
       <div className="px-5 md:px-10 mb-8 md:mb-12 text-center">
         <span className="inline-block text-[10px] font-medium uppercase tracking-[0.4em] text-muted-foreground mb-4">
