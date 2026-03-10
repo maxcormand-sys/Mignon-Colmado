@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 const lamps = [
   {
@@ -21,8 +22,8 @@ const lamps = [
 export function RevealLamps() {
   const [activeStates, setActiveStates] = useState<{ [key: number]: boolean }>({})
 
-  const toggleLamp = (id: number) => {
-    setActiveStates(prev => ({ ...prev, [id]: !prev[id] }))
+  const handleInteraction = (id: number, isActive: boolean) => {
+    setActiveStates(prev => ({ ...prev, [id]: isActive }))
   }
 
   return (
@@ -32,9 +33,15 @@ export function RevealLamps() {
         <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-foreground/40 block mb-3">
           Descobreix
         </span>
-        <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em]">
+        <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em] mb-6">
           Prem per encendre
         </h2>
+        <Link
+          href="/cataleg"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#b3dfe0] text-[#2c2420] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors"
+        >
+          Explorar col·leccio
+        </Link>
       </div>
 
       {/* Interactive grid */}
@@ -43,9 +50,10 @@ export function RevealLamps() {
           <div
             key={lamp.id}
             className="relative aspect-[3/4] cursor-pointer overflow-hidden group"
-            onClick={() => toggleLamp(lamp.id)}
-            onMouseEnter={() => setActiveStates(prev => ({ ...prev, [lamp.id]: true }))}
-            onMouseLeave={() => setActiveStates(prev => ({ ...prev, [lamp.id]: false }))}
+            onTouchStart={() => handleInteraction(lamp.id, true)}
+            onTouchEnd={() => handleInteraction(lamp.id, false)}
+            onMouseEnter={() => handleInteraction(lamp.id, true)}
+            onMouseLeave={() => handleInteraction(lamp.id, false)}
           >
             {/* Background only */}
             <Image
@@ -73,20 +81,8 @@ export function RevealLamps() {
                 activeStates[lamp.id] ? "opacity-0" : "opacity-100"
               }`}
             >
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white/60 flex items-center justify-center backdrop-blur-sm bg-white/10">
-                <svg 
-                  className="w-6 h-6 md:w-8 md:h-8 text-white" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor" 
-                  strokeWidth={1.5}
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" 
-                  />
-                </svg>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#2c2420] flex items-center justify-center shadow-lg">
+                <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#fffdf8]" />
               </div>
             </div>
           </div>

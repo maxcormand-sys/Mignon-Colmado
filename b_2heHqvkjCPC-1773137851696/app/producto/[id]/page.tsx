@@ -209,8 +209,8 @@ export default function ProductPage() {
                   onClick={handleAddToCart}
                   disabled={isAdded}
                   className={`
-                    w-full flex items-center justify-center gap-3 px-8 py-4 rounded-full
-                    text-sm font-medium uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer
+                    w-full flex items-center justify-center gap-3 px-6 py-3 rounded-full
+                    text-[10px] font-medium uppercase tracking-[0.15em] transition-all duration-300 cursor-pointer
                     ${isAdded 
                       ? "bg-green-600 text-white" 
                       : "bg-foreground text-background hover:scale-[1.02]"
