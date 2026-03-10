@@ -58,6 +58,7 @@ export function Hero() {
           fill
           className="object-cover"
         />
+        <div className="absolute inset-0 bg-[#2c2420]/40" />
       </div>
     </section>
   )
