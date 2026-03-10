@@ -36,7 +36,7 @@ export function Hero() {
       overlayRef.current.style.opacity = String(overlayOpacity)
     }
     
-    // Logo invert and shadow
+    // Logo invert and shadow - with defensive checks
     if (logoRef.current) {
       const shadowOpacity = Math.max(0, 0.7 * (1 - colorProgress))
       const shadowSize = Math.max(0, 20 * (1 - colorProgress))
@@ -68,11 +68,19 @@ export function Hero() {
     let rafId: number
     let lastProgress = -1
     let lastTime = 0
+    let pendingUpdate = false
 
     const handleScroll = () => {
       const now = Date.now()
       // Throttle to 60fps (16ms)
-      if (now - lastTime < 16) return
+      if (now - lastTime < 16) {
+        if (!pendingUpdate) {
+          pendingUpdate = true
+          rafId = requestAnimationFrame(handleScroll)
+        }
+        return
+      }
+      pendingUpdate = false
       lastTime = now
 
       if (!sectionRef.current) return
@@ -82,10 +90,10 @@ export function Hero() {
       const scrolled = -rect.top
       const progress = Math.max(0, Math.min(1, scrolled / sectionHeight))
       
-      // Only update if progress changed significantly
+      // Always update on fast scroll to prevent missing frames
       if (Math.abs(progress - lastProgress) > 0.001) {
         lastProgress = progress
-        rafId = requestAnimationFrame(() => updateStyles(progress))
+        updateStyles(progress)
       }
     }
 
@@ -136,7 +144,7 @@ export function Hero() {
               alt="Mignon"
               width={400}
               height={100}
-              className="w-[200px] md:w-[400px] h-auto will-change-[filter]"
+              className="w-[120px] md:w-[400px] h-auto will-change-[filter]"
               style={{ width: 'auto', height: 'auto' }}
               priority
             />
