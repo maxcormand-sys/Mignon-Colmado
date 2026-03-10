@@ -123,15 +123,6 @@ export function RevealLamps() {
         ))}
       </div>
 
-      {/* Button below carousel */}
-      <div className="bg-background px-6 py-10 md:py-14 text-center">
-        <Link
-          href="/cataleg"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#b3dfe0] text-[#2c2420] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors"
-        >
-          Explorar col·leccio
-        </Link>
-      </div>
     </section>
   )
 }

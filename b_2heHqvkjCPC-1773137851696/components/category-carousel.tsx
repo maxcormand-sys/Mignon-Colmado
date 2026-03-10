@@ -219,7 +219,7 @@ export function CategoryCarousel() {
       >
         <div
           ref={trackRef}
-          className="flex gap-5 md:gap-8 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4"
+          className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4"
           style={{ 
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -235,7 +235,7 @@ export function CategoryCarousel() {
           {displayItems.map((item, index) => (
             <article
               key={`${item.id}-${index}`}
-              className="flex-shrink-0 w-[260px] md:w-[320px] group"
+              className="flex-shrink-0 w-[280px] md:w-[340px] group"
             >
               <Link
                 href={`/cataleg?category=${item.category.toLowerCase()}`}
@@ -247,18 +247,18 @@ export function CategoryCarousel() {
                 draggable={false}
                 className="block"
               >
-                <div className="relative aspect-square overflow-hidden bg-white rounded-lg border border-gray-100">
+                <div className="relative aspect-square overflow-hidden bg-white">
                   <Image
                     src={item.image}
                     alt={item.name}
                     fill
-                    className="object-contain p-6 transition-transform duration-500 ease-out pointer-events-none group-hover:scale-105"
-                    sizes="(max-width: 640px) 260px, 320px"
+                    className="object-contain p-4 transition-transform duration-500 ease-out pointer-events-none group-hover:scale-105"
+                    sizes="(max-width: 640px) 280px, 340px"
                     draggable={false}
                     loading="lazy"
                   />
                 </div>
-                <p className="mt-3 text-center text-[11px] font-medium uppercase tracking-[0.15em] text-foreground/70">
+                <p className="mt-2 text-center text-[11px] font-medium uppercase tracking-[0.15em] text-foreground/70">
                   {item.category}
                 </p>
               </Link>
