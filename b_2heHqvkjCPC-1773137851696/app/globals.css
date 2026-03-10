@@ -1,0 +1,124 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #fffdf8;
+  --foreground: #2c2420;
+  --card: #ffffff;
+  --card-foreground: #2c2420;
+  --popover: #ffffff;
+  --popover-foreground: #2c2420;
+  --primary: #2c2420;
+  --primary-foreground: #fffdf8;
+  --secondary: #b2d8d8;
+  --secondary-foreground: #2c2420;
+  --muted: #f5efe7;
+  --muted-foreground: #9a8e82;
+  --accent: #2c2420;
+  --accent-foreground: #fffdf8;
+  --destructive: #c45a52;
+  --destructive-foreground: #ffffff;
+  --border: #e8dfd4;
+  --input: #e8dfd4;
+  --ring: #b2d8d8;
+  --chart-1: #b2d8d8;
+  --chart-2: #2c2420;
+  --chart-3: #8fb8b8;
+  --chart-4: #d4cec4;
+  --chart-5: #fffdf8;
+  --radius: 0rem;
+  --sidebar: #fffdf8;
+  --sidebar-foreground: #2c2420;
+  --sidebar-primary: #2c2420;
+  --sidebar-primary-foreground: #fffdf8;
+  --sidebar-accent: #b2d8d8;
+  --sidebar-accent-foreground: #2c2420;
+  --sidebar-border: #e8dfd4;
+  --sidebar-ring: #b2d8d8;
+}
+
+@theme inline {
+  --font-sans: 'DM Sans', 'DM Sans Fallback', sans-serif;
+  --font-serif: 'Playfair Display', 'Playfair Display Fallback', serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+.cart-scroll::-webkit-scrollbar { width: 2px; }
+.cart-scroll::-webkit-scrollbar-track { background: transparent; }
+.cart-scroll::-webkit-scrollbar-thumb { background: var(--border); }
+
+/* Smooth image reveal */
+@keyframes reveal {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0); }
+}
+
+.animate-reveal {
+  animation: reveal 1s ease-out forwards;
+}
