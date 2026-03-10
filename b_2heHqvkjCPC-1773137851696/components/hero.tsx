@@ -30,8 +30,8 @@ export function Hero() {
               alt="Mignon"
               width={400}
               height={100}
-              className="w-[200px] md:w-[400px] h-auto drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]"
-              style={{ filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(0,0,0,0.5))' }}
+              className="w-[200px] md:w-[400px] drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]"
+              style={{ height: 'auto', filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(0,0,0,0.5))' }}
               priority
             />
             <span 
