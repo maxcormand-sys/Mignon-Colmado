@@ -7,6 +7,7 @@ import { useState } from "react"
 import { products } from "@/lib/products"
 import { useCart } from "@/components/cart-provider"
 import { ArrowLeft, Plus, Check, ShoppingBag } from "lucide-react"
+import { CartSheet } from "@/components/cart-sheet"
 
 export default function ProductPage() {
   const params = useParams()
@@ -242,6 +243,8 @@ export default function ProductPage() {
           </div>
         </div>
       </main>
+    </div>
+      <CartSheet />
     </div>
   )
 }
