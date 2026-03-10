@@ -18,10 +18,10 @@ export function Hero() {
             priority
           />
           <span 
-            className="text-[10px] md:text-[12px] font-medium uppercase tracking-[0.3em] text-[#fffdf8]/90"
+            className="font-serif italic text-[14px] md:text-[18px] text-[#fffdf8]/90 tracking-wide"
             style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6)' }}
           >
-            Objectes amb historia
+            La nostra botiga, ara online
           </span>
         </div>
       </div>
