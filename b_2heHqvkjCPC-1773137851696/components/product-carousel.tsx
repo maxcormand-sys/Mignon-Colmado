@@ -4,8 +4,6 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import Image from "next/image"
 import type { Product } from "@/lib/products"
 import { categories, type Category } from "@/lib/products"
-import { useCart } from "@/components/cart-provider"
-import { Plus } from "lucide-react"
 
 interface ProductCarouselProps {
   products: Product[]
@@ -150,19 +148,27 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
-  // Wheel handler for trackpad horizontal scroll
+  // Wheel handler for trackpad - much smoother
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  
   const handleWheel = (e: React.WheelEvent) => {
     if (!trackRef.current) return
     
-    // Detect if it's a horizontal scroll (trackpad gesture)
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-      e.preventDefault()
-      setIsAutoScrolling(false)
-      trackRef.current.scrollLeft += e.deltaX
-      
-      // Resume auto-scroll after inactivity
-      setTimeout(() => setIsAutoScrolling(true), 2000)
+    // Always handle wheel events for smooth trackpad experience
+    e.preventDefault()
+    setIsAutoScrolling(false)
+    
+    // Use both deltaX and deltaY for trackpad flexibility
+    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
+    trackRef.current.scrollLeft += delta * 1.2
+    
+    // Clear existing timeout
+    if (wheelTimeoutRef.current) {
+      clearTimeout(wheelTimeoutRef.current)
     }
+    
+    // Resume auto-scroll after inactivity
+    wheelTimeoutRef.current = setTimeout(() => setIsAutoScrolling(true), 2500)
   }
 
   return (
@@ -233,7 +239,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
               onMouseEnter={() => setActiveIndex(index)}
               onMouseLeave={() => setActiveIndex(null)}
             >
-              {/* Image container */}
+              {/* Image container - only photo */}
               <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded-lg">
                 <Image
                   src={
@@ -250,15 +256,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                   draggable={false}
                 />
 
-                {/* Category badge */}
-                <div className="absolute top-4 left-4">
-                  <span 
-                    className="inline-block px-3 py-1 text-[10px] font-medium uppercase tracking-wider rounded-full bg-background/90 backdrop-blur-sm text-foreground"
-                  >
-                    {product.category}
-                  </span>
-                </div>
-
                 {/* Sold overlay */}
                 {product.sold && (
                   <div className="absolute inset-0 flex items-center justify-center bg-background/90 backdrop-blur-sm">
@@ -267,47 +264,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                     </span>
                   </div>
                 )}
-
-                {/* Add to cart button */}
-                {!product.sold && (
-                  <div 
-                    className={`absolute bottom-4 left-4 right-4 transition-all duration-300 ${
-                      activeIndex === index ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                    }`}
-                  >
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        if (!isDragging) {
-                          addItem(product)
-                        }
-                      }}
-                      className="w-full flex items-center justify-center gap-2 px-5 py-3 bg-foreground text-background text-[11px] font-medium uppercase tracking-[0.15em] rounded-full transition-transform duration-300 hover:scale-[1.02] cursor-pointer"
-                      aria-label={`Anadir ${product.name} al carrito`}
-                    >
-                      <Plus className="h-4 w-4" strokeWidth={2} />
-                      Anadir al carrito
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Product info */}
-              <div className="mt-4 flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-[14px] md:text-[15px] font-medium text-foreground leading-tight">
-                    {product.name}
-                  </h3>
-                  <p className="text-[12px] text-muted-foreground mt-1 line-clamp-1">
-                    {product.description}
-                  </p>
-                </div>
-                <div 
-                  className="flex-shrink-0 text-[15px] md:text-[16px] font-semibold"
-                  style={{ color: product.color }}
-                >
-                  {product.price}&euro;
-                </div>
               </div>
             </article>
           ))}
