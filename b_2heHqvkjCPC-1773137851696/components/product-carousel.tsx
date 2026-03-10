@@ -208,8 +208,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                 px-4 md:px-6 py-2 md:py-2.5 text-[11px] md:text-[12px] font-medium uppercase tracking-[0.15em] 
                 rounded-full transition-all duration-300 cursor-pointer
                 ${activeFilter === category 
-                  ? "bg-[#4A9B9B] text-[#fffdf8]" 
-                  : "bg-transparent text-foreground border border-[#4A9B9B]/40 hover:bg-[#4A9B9B]/10"
+                  ? "bg-[#b3dfe0] text-[#2c2420]" 
+                  : "bg-transparent text-foreground border border-[#b3dfe0] hover:bg-[#b3dfe0]/20"
                 }
               `}
             >
