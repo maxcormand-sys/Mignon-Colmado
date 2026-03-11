@@ -32,8 +32,7 @@ export default function CatalegPage() {
               alt="Mignon"
               width={120}
               height={40}
-              className="h-auto"
-              style={{ filter: 'brightness(0)', width: 'auto', maxWidth: '120px' }}
+              style={{ filter: 'brightness(0)', width: 'auto', height: 'auto', maxWidth: '120px' }}
             />
             <div className="w-[80px]" />
           </div>
