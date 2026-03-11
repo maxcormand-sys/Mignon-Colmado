@@ -5,10 +5,10 @@ import Image from "next/image"
 
 const fallingObjects = [
   { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/E38CEA8D-FC2C-4D10-AF84-8EFB4F73ADAD-Photoroom-BMfKqtfSeoRnjq4gphPzAAPCZEawnj.png", left: "5%", delay: 0, size: 180 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BA16B0A8-7EEA-4C9F-9CC7-AA9414FDAD54-Photoroom-tBh4afl4oHYz1TsxChEu7WcyQr8cMS.png", left: "22%", delay: 0.05, size: 150 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/D3A3ECFC-57B0-4671-908A-994625476304-Photoroom-B2SOT6VCoWtzydzm64mnUH8VaVS57S.png", left: "82%", delay: 0.1, size: 190 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8003375B-4B5F-4171-8AC0-98ECFDAD849F-Photoroom-Ssz0mpDbQubIFE1XjxJQUHFR0aAypD.png", left: "65%", delay: 0.15, size: 170 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8258F740-097D-4B7A-845E-D1E1EE9E0D11-Photoroom-jImEL2p0k14xVCKp22Fxz3yseFZ4fV.png", left: "42%", delay: 0.2, size: 160 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BA16B0A8-7EEA-4C9F-9CC7-AA9414FDAD54-Photoroom-tBh4afl4oHYz1TsxChEu7WcyQr8cMS.png", left: "22%", delay: 0.4, size: 150 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/D3A3ECFC-57B0-4671-908A-994625476304-Photoroom-B2SOT6VCoWtzydzm64mnUH8VaVS57S.png", left: "82%", delay: 0.8, size: 190 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8003375B-4B5F-4171-8AC0-98ECFDAD849F-Photoroom-Ssz0mpDbQubIFE1XjxJQUHFR0aAypD.png", left: "65%", delay: 1.2, size: 170 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8258F740-097D-4B7A-845E-D1E1EE9E0D11-Photoroom-jImEL2p0k14xVCKp22Fxz3yseFZ4fV.png", left: "42%", delay: 1.6, size: 160 },
 ]
 
 export function AboutSection() {
@@ -69,8 +69,8 @@ export function AboutSection() {
   const phrase2 = getElementState(0.55, 0.68)
   const reviews = getElementState(0.68, 1)
 
-  // Calculate falling objects visibility (start a bit earlier so you see them even with fast scroll)
-  const showFallingObjects = scrollProgress >= 0.6
+  // Calculate falling objects visibility (start when phrase1 appears - "viatgem per mercats")
+  const showFallingObjects = scrollProgress >= 0.4
 
   const reviewsData = [
     { name: "Maria L.", text: "Un tresor amagat a Gracia. Cada visita es una sorpresa." },
@@ -94,7 +94,7 @@ export function AboutSection() {
             className="absolute pointer-events-none z-10"
             style={{
               left: obj.left,
-              animation: `fall 1.5s ease-in forwards`,
+              animation: `fall 2.5s ease-in-out forwards`,
               animationDelay: `${obj.delay}s`,
               top: "-200px",
             }}
@@ -113,14 +113,21 @@ export function AboutSection() {
         <style jsx global>{`
           @keyframes fall {
             0% {
-              transform: translateY(0) rotate(0deg);
+              transform: translateY(0) rotate(-5deg);
               opacity: 0;
             }
-            10% {
-              opacity: 0.8;
+            15% {
+              opacity: 1;
+            }
+            50% {
+              transform: translateY(50vh) rotate(8deg);
+              opacity: 1;
+            }
+            85% {
+              opacity: 0.6;
             }
             100% {
-              transform: translateY(120vh) rotate(20deg);
+              transform: translateY(120vh) rotate(15deg);
               opacity: 0;
             }
           }
