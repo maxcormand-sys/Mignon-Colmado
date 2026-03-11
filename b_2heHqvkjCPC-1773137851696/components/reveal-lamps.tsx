@@ -69,7 +69,7 @@ export function RevealLamps() {
 
   return (
     <section className="relative">
-      <div className="bg-background px-6 py-12 md:py-16 text-center">
+      <div className="bg-background px-6 pt-6 md:pt-8 pb-8 md:pb-10 text-center">
         <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-foreground/40 block mb-3">
           Descobreix
         </span>
@@ -78,7 +78,7 @@ export function RevealLamps() {
         </h2>
       </div>
 
-      <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-10 md:px-12 pb-12">
+      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-8 md:px-10 pb-12">
         {lamps.map((lamp) => (
           <div
             key={lamp.id}
