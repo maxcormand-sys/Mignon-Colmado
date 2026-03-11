@@ -19,7 +19,7 @@ export function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
           
           {/* Image - larger */}
-          <div className="lg:col-span-7 relative h-[350px] md:h-[480px] overflow-hidden">
+          <div className="lg:col-span-7 relative min-h-[350px] h-[350px] md:min-h-[480px] md:h-[480px] overflow-hidden">
             <Image
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-jIk23db8ZYVSJQDmutqrlPq0m5L2GJ.jpg"
               alt="Interior de Mignon"
