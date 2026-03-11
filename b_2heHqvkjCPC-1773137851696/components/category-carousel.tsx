@@ -213,7 +213,7 @@ export function CategoryCarousel() {
       <div className="relative">
         <div
           ref={trackRef}
-          className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4"
+          className="flex gap-3 md:gap-4 overflow-x-auto cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           style={{ 
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -258,11 +258,6 @@ export function CategoryCarousel() {
         </div>
       </div>
 
-      <style jsx global>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   )
 }

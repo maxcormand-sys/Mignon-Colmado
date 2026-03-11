@@ -171,7 +171,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         {/* Product track */}
         <div
           ref={trackRef}
-          className="flex gap-0 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none pb-4"
+          className="flex gap-0 overflow-x-auto cursor-grab active:cursor-grabbing select-none pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           style={{ 
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -242,12 +242,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         </Link>
       </div>
 
-      {/* Hide scrollbar globally for this component */}
-      <style jsx global>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   )
 }
