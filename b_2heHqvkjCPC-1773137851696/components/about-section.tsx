@@ -2,48 +2,43 @@ import Image from "next/image"
 
 export function AboutSection() {
   return (
-    <section className="bg-background py-16 md:py-24">
-      <div className="px-5 md:px-10 max-w-6xl mx-auto">
+    <section className="relative bg-background">
+      {/* Full width image */}
+      <div className="relative w-full h-[500px] md:h-[600px] lg:h-[700px]">
+        <Image
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-jIk23db8ZYVSJQDmutqrlPq0m5L2GJ.jpg"
+          alt="Interior de Mignon"
+          fill
+          className="object-cover"
+          sizes="100vw"
+          priority
+        />
         
-        {/* Header centered */}
-        <div className="text-center mb-12 md:mb-16">
-          <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-foreground/40 block mb-4">
-            El colmado
-          </span>
-          <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em]">
-            Objectes amb historia propia
-          </h2>
-        </div>
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/40 to-transparent md:from-white/95 md:via-white/50" />
         
-        {/* Two column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
-          
-          {/* Image - larger */}
-          <div className="lg:col-span-7 relative min-h-[350px] h-[350px] md:min-h-[480px] md:h-[480px] overflow-hidden">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-jIk23db8ZYVSJQDmutqrlPq0m5L2GJ.jpg"
-              alt="Interior de Mignon"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 60vw"
-            />
+        {/* Content overlay - positioned on the left */}
+        <div className="absolute inset-0 flex items-center">
+          <div className="px-6 md:px-12 lg:px-20 max-w-xl lg:max-w-2xl">
+            
+            <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-[#2c2420]/50 block mb-5">
+              El colmado
+            </span>
+            
+            <h2 className="font-serif italic text-[clamp(2rem,5vw,3.2rem)] text-[#2c2420] tracking-[-0.02em] leading-[1.1] mb-6">
+              On cada objecte<br />
+              <span className="text-[#2c2420]/70">te historia</span>
+            </h2>
+            
+            <p className="text-[14px] md:text-[15px] leading-[1.9] text-[#2c2420]/60 mb-4 max-w-md">
+              Un petit colmado al cor de Gracia. Viatgem per mercats i antiquaris d&apos;Europa buscant peces amb anima que mereixen una nova vida.
+            </p>
+            
+            <p className="text-[13px] text-[#2c2420]/40 tracking-wide">
+              C/ Diluvi, 11 — Gracia, Barcelona
+            </p>
+            
           </div>
-
-          {/* Content - narrower */}
-          <div className="lg:col-span-5 flex flex-col justify-center">
-            <div className="space-y-5 text-[14px] md:text-[15px] leading-[1.8] text-foreground/60">
-              <p>
-                Mignon es un petit colmado al cor de Gracia on cada objecte te una historia que mereix ser continuada. Viatgem per mercats i antiquaris d&apos;Europa buscant peces amb anima.
-              </p>
-              <p>
-                Creiem en la bellesa de l&apos;imperfecte, en el valor del sostenible i en donar una segona vida a objectes que encara tenen molt per oferir.
-              </p>
-              <p className="text-foreground/40 text-[13px] pt-4">
-                C/ Diluvi, 11 — Barcelona
-              </p>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
