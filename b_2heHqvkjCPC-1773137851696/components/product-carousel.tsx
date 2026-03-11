@@ -42,7 +42,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
       velocityRef.current *= 0.95
     } else {
       // Auto scroll when no momentum - scroll in opposite direction (right to left)
-      track.scrollLeft -= 0.5
+      track.scrollLeft -= 0.7
     }
 
     // Loop back for infinite scroll
@@ -167,17 +167,11 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
       </div>
 
       {/* Carousel container */}
-      <div 
-        className="relative"
-        onMouseEnter={() => setIsAutoScrolling(false)}
-        onMouseLeave={() => {
-          if (!isDragging) setIsAutoScrolling(true)
-        }}
-      >
+      <div className="relative">
         {/* Product track */}
         <div
           ref={trackRef}
-          className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4"
+          className="flex gap-0 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none pb-4"
           style={{ 
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -209,7 +203,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                 className="block"
               >
                 {/* Image container - only photo, no hover change */}
-                <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded-lg">
+                <div className="relative aspect-[4/5] overflow-hidden bg-muted">
                   <Image
                     src={product.image}
                     alt={product.name}

@@ -100,7 +100,7 @@ export function CategoryCarousel() {
       track.scrollLeft += velocityRef.current
       velocityRef.current *= 0.95
     } else {
-      track.scrollLeft += 0.4
+      track.scrollLeft += 0.7
     }
 
     if (track.scrollLeft >= maxScroll * 2) {
@@ -210,13 +210,7 @@ export function CategoryCarousel() {
       </div>
 
       {/* Carousel */}
-      <div 
-        className="relative"
-        onMouseEnter={() => setIsAutoScrolling(false)}
-        onMouseLeave={() => {
-          if (!isDragging) setIsAutoScrolling(true)
-        }}
-      >
+      <div className="relative">
         <div
           ref={trackRef}
           className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4"
@@ -258,9 +252,6 @@ export function CategoryCarousel() {
                     loading="lazy"
                   />
                 </div>
-                <p className="mt-2 text-center text-[11px] font-medium uppercase tracking-[0.15em] text-foreground/70">
-                  {item.category}
-                </p>
               </Link>
             </article>
           ))}
