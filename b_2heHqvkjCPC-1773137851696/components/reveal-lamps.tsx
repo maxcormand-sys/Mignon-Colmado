@@ -78,11 +78,11 @@ export function RevealLamps() {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 px-8 md:px-16 lg:px-24 pb-12">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 px-12 md:px-20 lg:px-24 pb-12">
         {lamps.map((lamp) => (
           <div
             key={lamp.id}
-            className="relative aspect-[3/4] cursor-pointer overflow-hidden"
+            className="relative aspect-[4/5] cursor-pointer overflow-hidden"
             onClick={() => handleInteraction(lamp.id)}
             onMouseEnter={() => handleMouseEnter(lamp.id)}
             onMouseLeave={() => handleMouseLeave(lamp.id)}
