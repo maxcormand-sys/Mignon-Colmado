@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Hero } from "@/components/hero"
 import { RevealLamps } from "@/components/reveal-lamps"
 import { ProductGrid } from "@/components/product-grid"
+import { CategoryCarousel } from "@/components/category-carousel"
 import { Footer } from "@/components/footer"
 import { CartSheet } from "@/components/cart-sheet"
 
@@ -12,8 +13,8 @@ export default function HomePage() {
       <main>
         <Hero />
         <RevealLamps />
+        <CategoryCarousel />
         <ProductGrid />
-
       </main>
       <Footer />
       <CartSheet />

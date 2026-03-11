@@ -4,7 +4,6 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import type { Product } from "@/lib/products"
-import { categories, type Category } from "@/lib/products"
 
 interface ProductCarouselProps {
   products: Product[]
@@ -12,7 +11,6 @@ interface ProductCarouselProps {
 
 export function ProductCarousel({ products }: ProductCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null)
-  const [activeFilter, setActiveFilter] = useState<Category>("Todo")
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
@@ -25,19 +23,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
   const hasDraggedRef = useRef(false)
   const dragStartPosRef = useRef(0)
 
-  const filteredProducts = activeFilter === "Todo" 
-    ? products 
-    : products.filter(p => p.category === activeFilter)
-
-  // Duplicate products for infinite scroll effect
-  const displayProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts]
-
-  // Reset scroll position when filter changes
-  useEffect(() => {
-    if (trackRef.current) {
-      trackRef.current.scrollLeft = 0
-    }
-  }, [activeFilter])
+  // Duplicate products for infinite scroll effect (all products, no filter)
+  const displayProducts = [...products, ...products, ...products]
 
   // Auto-scroll animation
   const animate = useCallback(() => {
@@ -54,8 +41,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
       track.scrollLeft += velocityRef.current
       velocityRef.current *= 0.95
     } else {
-      // Auto scroll when no momentum
-      track.scrollLeft += 0.5
+      // Auto scroll when no momentum - scroll in opposite direction (right to left)
+      track.scrollLeft -= 0.5
     }
 
     // Loop back for infinite scroll
@@ -165,7 +152,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
   }, [])
 
   return (
-    <section id="coleccion" className="scroll-mt-20 py-12 md:py-20">
+    <section id="coleccion" className="scroll-mt-20 pt-6 md:pt-10 pb-12 md:pb-20">
       {/* Header */}
       <div className="px-5 md:px-10 mb-10 md:mb-14 text-center">
         <span className="inline-block text-[10px] font-medium uppercase tracking-[0.4em] text-muted-foreground mb-4 px-4 py-1.5 border border-border rounded-full">
@@ -174,29 +161,9 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         <h2 className="font-serif italic text-[clamp(2rem,5vw,3.5rem)] leading-[1] text-foreground tracking-tight mb-4">
           Objectes trobats
         </h2>
-        <p className="text-[14px] text-muted-foreground max-w-md mx-auto mb-8">
+        <p className="text-[14px] text-muted-foreground max-w-md mx-auto">
           Piezas unicas seleccionadas en mercados de toda Europa
         </p>
-
-        {/* Filter tabs */}
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveFilter(category)}
-              className={`
-                px-6 py-3 text-[10px] font-medium uppercase tracking-[0.15em] 
-                rounded-full transition-all duration-300 cursor-pointer
-                ${activeFilter === category 
-                  ? "bg-[#b3dfe0] text-[#2c2420]" 
-                  : "bg-transparent text-foreground border border-[#b3dfe0] hover:bg-[#b3dfe0]/20"
-                }
-              `}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Carousel container */}
@@ -241,14 +208,10 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                 draggable={false}
                 className="block"
               >
-                {/* Image container - only photo */}
+                {/* Image container - only photo, no hover change */}
                 <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded-lg">
                   <Image
-                    src={
-                      product.imageAlt && activeIndex === index
-                        ? product.imageAlt
-                        : product.image
-                    }
+                    src={product.image}
                     alt={product.name}
                     fill
                     className={`object-cover transition-transform duration-700 ease-out pointer-events-none ${
@@ -273,6 +236,16 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
             </article>
           ))}
         </div>
+      </div>
+
+      {/* Button below carousel */}
+      <div className="px-5 md:px-10 pt-10 md:pt-14 text-center">
+        <Link
+          href="/cataleg"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#b3dfe0] text-[#2c2420] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors"
+        >
+          Explorar col·leccio
+        </Link>
       </div>
 
       {/* Hide scrollbar globally for this component */}

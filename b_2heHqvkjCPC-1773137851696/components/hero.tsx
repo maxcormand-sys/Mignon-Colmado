@@ -65,21 +65,26 @@ export function Hero() {
   }, [])
 
   useEffect(() => {
-    let rafId: number
-    let lastProgress = -1
+    let rafId: number | null = null
+    let ticking = false
 
     const handleScroll = () => {
-      if (!sectionRef.current) return
-      
-      const rect = sectionRef.current.getBoundingClientRect()
-      const sectionHeight = sectionRef.current.offsetHeight - window.innerHeight
-      const scrolled = -rect.top
-      const progress = Math.max(0, Math.min(1, scrolled / sectionHeight))
-      
-      // Only update if progress changed significantly
-      if (Math.abs(progress - lastProgress) > 0.001) {
-        lastProgress = progress
-        rafId = requestAnimationFrame(() => updateStyles(progress))
+      if (!ticking) {
+        ticking = true
+        rafId = requestAnimationFrame(() => {
+          if (!sectionRef.current) {
+            ticking = false
+            return
+          }
+          
+          const rect = sectionRef.current.getBoundingClientRect()
+          const sectionHeight = sectionRef.current.offsetHeight - window.innerHeight
+          const scrolled = -rect.top
+          const progress = Math.max(0, Math.min(1, scrolled / sectionHeight))
+          
+          updateStyles(progress)
+          ticking = false
+        })
       }
     }
 
@@ -88,7 +93,7 @@ export function Hero() {
     
     return () => {
       window.removeEventListener("scroll", handleScroll)
-      if (rafId) cancelAnimationFrame(rafId)
+      if (rafId !== null) cancelAnimationFrame(rafId)
     }
   }, [updateStyles])
 
@@ -130,7 +135,8 @@ export function Hero() {
               alt="Mignon"
               width={400}
               height={100}
-              className="w-[200px] md:w-[400px] h-auto will-change-[filter]"
+              className="w-[200px] md:w-[400px] will-change-[filter]"
+              style={{ height: 'auto' }}
               priority
             />
             <span 
