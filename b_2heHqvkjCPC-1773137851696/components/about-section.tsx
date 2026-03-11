@@ -127,7 +127,7 @@ export function AboutSection() {
             transform: `translateY(${phrase1.y}px)`
           }}
         >
-          <p className="text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
+          <p className="font-serif italic text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
             Viatgem per mercats i antiquaris d&apos;Europa buscant peces amb anima que mereixen una nova vida.
           </p>
         </div>
@@ -140,7 +140,7 @@ export function AboutSection() {
             transform: `translateY(${phrase2.y}px)`
           }}
         >
-          <p className="text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
+          <p className="font-serif italic text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
             Creiem en la bellesa de l&apos;imperfecte i en donar una segona oportunitat als objectes que encara tenen molt per oferir.
           </p>
         </div>
