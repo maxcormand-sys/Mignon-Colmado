@@ -15,9 +15,8 @@ export function AboutSection() {
       const sectionHeight = sectionRef.current.offsetHeight
       const windowHeight = window.innerHeight
       
-      // Calculate progress from 0 to 1 based on scroll position
       const scrolled = windowHeight - rect.top
-      const totalScrollable = sectionHeight + windowHeight
+      const totalScrollable = sectionHeight
       const progress = Math.max(0, Math.min(1, scrolled / totalScrollable))
       
       setScrollProgress(progress)
@@ -29,103 +28,122 @@ export function AboutSection() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Phase 1: 0-0.33 = Image visible
-  // Phase 2: 0.33-0.66 = Title appears, image fades
-  // Phase 3: 0.66-1 = Text appears, title fades slightly
+  // 5 phases for 5 elements
+  // Phase 1: 0-0.2 = Image
+  // Phase 2: 0.2-0.4 = Title
+  // Phase 3: 0.4-0.6 = Subtitle
+  // Phase 4: 0.6-0.8 = First phrase
+  // Phase 5: 0.8-1 = Second phrase
 
-  const imageOpacity = scrollProgress < 0.25 
-    ? 1 
-    : Math.max(0, 1 - (scrollProgress - 0.25) * 3)
-  
-  const titleOpacity = scrollProgress < 0.2 
-    ? 0 
-    : scrollProgress > 0.65 
-      ? Math.max(0.3, 1 - (scrollProgress - 0.65) * 2)
-      : Math.min(1, (scrollProgress - 0.2) * 3)
-  
-  const titleY = scrollProgress < 0.2 
-    ? 40 
-    : Math.max(0, 40 - (scrollProgress - 0.2) * 100)
+  const getElementState = (startPhase: number, endPhase: number) => {
+    if (scrollProgress < startPhase) {
+      return { opacity: 0, y: 30 }
+    } else if (scrollProgress < endPhase) {
+      const phaseProgress = (scrollProgress - startPhase) / (endPhase - startPhase)
+      return { 
+        opacity: Math.min(1, phaseProgress * 2), 
+        y: Math.max(0, 30 - phaseProgress * 30) 
+      }
+    } else {
+      const fadeProgress = (scrollProgress - endPhase) / 0.15
+      return { 
+        opacity: Math.max(0, 1 - fadeProgress), 
+        y: 0 
+      }
+    }
+  }
 
-  const textOpacity = scrollProgress < 0.5 
-    ? 0 
-    : Math.min(1, (scrollProgress - 0.5) * 3)
-  
-  const textY = scrollProgress < 0.5 
-    ? 30 
-    : Math.max(0, 30 - (scrollProgress - 0.5) * 80)
+  const image = getElementState(0, 0.2)
+  const title = getElementState(0.2, 0.4)
+  const subtitle = getElementState(0.4, 0.55)
+  const phrase1 = getElementState(0.55, 0.7)
+  const phrase2 = getElementState(0.7, 0.85)
 
   return (
     <section 
       ref={sectionRef}
       className="relative bg-background"
-      style={{ height: "250vh" }}
+      style={{ height: "400vh" }}
     >
       {/* Sticky container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
         
-        {/* Image layer */}
+        {/* Image - centered, not full screen */}
         <div 
-          className="absolute inset-0 transition-opacity duration-100"
-          style={{ opacity: imageOpacity }}
+          className="absolute inset-0 flex items-center justify-center px-8"
+          style={{ 
+            opacity: image.opacity,
+            transform: `translateY(${image.y}px)`
+          }}
         >
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-jIk23db8ZYVSJQDmutqrlPq0m5L2GJ.jpg"
-            alt="Interior de Mignon"
-            fill
-            className="object-cover"
-            sizes="100vw"
-            priority
-          />
+          <div className="relative w-full max-w-3xl h-[60vh] overflow-hidden">
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-jIk23db8ZYVSJQDmutqrlPq0m5L2GJ.jpg"
+              alt="Interior de Mignon"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 900px"
+              priority
+            />
+          </div>
         </div>
 
-        {/* Content layer */}
-        <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-          
-          {/* Title */}
-          <div 
-            className="transition-all duration-100"
-            style={{ 
-              opacity: titleOpacity,
-              transform: `translateY(${titleY}px)`
-            }}
-          >
-            <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-[#2c2420]/50 block mb-5">
+        {/* Title */}
+        <div 
+          className="absolute inset-0 flex items-center justify-center px-6"
+          style={{ 
+            opacity: title.opacity,
+            transform: `translateY(${title.y}px)`
+          }}
+        >
+          <div className="text-center">
+            <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-foreground/40 block mb-4">
               El colmado
             </span>
-            <h2 className="font-serif italic text-[clamp(2.5rem,7vw,4.5rem)] text-[#2c2420] tracking-[-0.02em] leading-[1.05]">
+            <h2 className="font-serif italic text-[clamp(2.2rem,6vw,4rem)] text-foreground tracking-[-0.02em] leading-[1.05]">
               On cada objecte<br />te historia
             </h2>
           </div>
-
-          {/* Text content */}
-          <div 
-            className="mt-10 transition-all duration-100"
-            style={{ 
-              opacity: textOpacity,
-              transform: `translateY(${textY}px)`
-            }}
-          >
-            <p className="text-[15px] md:text-[16px] leading-[1.9] text-[#2c2420]/60 mb-6 max-w-lg mx-auto">
-              Un petit colmado al cor de Gracia. Viatgem per mercats i antiquaris d&apos;Europa buscant peces amb anima que mereixen una nova vida.
-            </p>
-            
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-[12px] text-[#2c2420]/40 uppercase tracking-[0.2em]">
-              <span>Vintage</span>
-              <span className="hidden md:block w-1 h-1 rounded-full bg-[#b3dfe0]" />
-              <span>Sostenible</span>
-              <span className="hidden md:block w-1 h-1 rounded-full bg-[#b3dfe0]" />
-              <span>Barcelona</span>
-            </div>
-          </div>
-
         </div>
 
-        {/* Background color that appears as image fades */}
+        {/* Subtitle */}
         <div 
-          className="absolute inset-0 bg-background -z-10"
-          style={{ opacity: 1 - imageOpacity }}
-        />
+          className="absolute inset-0 flex items-center justify-center px-6"
+          style={{ 
+            opacity: subtitle.opacity,
+            transform: `translateY(${subtitle.y}px)`
+          }}
+        >
+          <p className="font-serif italic text-[clamp(1.2rem,3vw,1.8rem)] text-foreground/70 text-center max-w-2xl leading-[1.6]">
+            Un petit colmado al cor de Gracia
+          </p>
+        </div>
+
+        {/* First phrase */}
+        <div 
+          className="absolute inset-0 flex items-center justify-center px-6"
+          style={{ 
+            opacity: phrase1.opacity,
+            transform: `translateY(${phrase1.y}px)`
+          }}
+        >
+          <p className="text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
+            Viatgem per mercats i antiquaris d&apos;Europa buscant peces amb anima que mereixen una nova vida.
+          </p>
+        </div>
+
+        {/* Second phrase */}
+        <div 
+          className="absolute inset-0 flex items-center justify-center px-6"
+          style={{ 
+            opacity: phrase2.opacity,
+            transform: `translateY(${phrase2.y}px)`
+          }}
+        >
+          <p className="text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
+            Creiem en la bellesa de l&apos;imperfecte i en donar una segona oportunitat als objectes que encara tenen molt per oferir.
+          </p>
+        </div>
 
       </div>
     </section>
