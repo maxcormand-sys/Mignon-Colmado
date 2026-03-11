@@ -226,7 +226,7 @@ export function CategoryCarousel() {
               className="flex-shrink-0 w-[280px] md:w-[340px] group"
             >
               <Link
-                href={`/cataleg?category=${item.category.toLowerCase()}`}
+                href={`/producto/${item.id}`}
                 onClick={(e) => {
                   if (hasDraggedRef.current) {
                     e.preventDefault()
@@ -245,6 +245,10 @@ export function CategoryCarousel() {
                     draggable={false}
                     loading="lazy"
                   />
+                </div>
+                {/* Product name on hover */}
+                <div className="mt-3 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <h3 className="font-serif italic text-[14px] text-foreground">{item.name}</h3>
                 </div>
               </Link>
             </article>

@@ -48,30 +48,35 @@ export default function ProductPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="flex items-center justify-between px-5 md:px-10 h-16">
+      {/* Header - turquoise, floating with margins */}
+      <header className="fixed top-4 left-4 right-4 md:left-8 md:right-8 z-50">
+        <div className="bg-[#b3dfe0] px-6 py-3 flex items-center justify-between">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            className="flex items-center gap-2 text-[10px] uppercase tracking-[0.15em] text-[#2c2420]/70 hover:text-[#2c2420] transition-colors px-3 py-1.5 border border-[#2c2420]/20 rounded-full cursor-pointer"
           >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Volver</span>
+            <ArrowLeft className="h-3.5 w-3.5" />
+            Tornar
           </button>
 
           <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-            <span className="font-serif italic text-xl text-foreground">
-              Mignon
-            </span>
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-3JKidEghwvs0m1RG08AhgRXPs4rDzj.png"
+              alt="Mignon"
+              width={100}
+              height={33}
+              className="h-auto"
+              style={{ filter: 'brightness(0)', width: 'auto', maxWidth: '100px' }}
+            />
           </Link>
 
           <button
             onClick={() => setIsOpen(true)}
             className="relative p-2 cursor-pointer"
           >
-            <ShoppingBag className="h-5 w-5 text-foreground" />
+            <ShoppingBag className="h-5 w-5 text-[#2c2420]" />
             {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-foreground text-background text-[10px] font-medium rounded-full flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#2c2420] text-white text-[10px] font-medium rounded-full flex items-center justify-center">
                 {totalItems}
               </span>
             )}
@@ -80,11 +85,11 @@ export default function ProductPage() {
       </header>
 
       {/* Main content */}
-      <main className="pt-16">
-        <div className="grid lg:grid-cols-2 min-h-[calc(100vh-4rem)]">
+      <main className="pt-20">
+        <div className="grid lg:grid-cols-2 min-h-[calc(100vh-5rem)]">
           {/* Image section */}
           <div className="relative bg-muted">
-            <div className="sticky top-16 h-[60vh] lg:h-[calc(100vh-4rem)] relative">
+            <div className="sticky top-20 h-[60vh] lg:h-[calc(100vh-5rem)] relative">
               <Image
                 src={activeImage === "alt" && product.imageAlt ? product.imageAlt : product.image}
                 alt={product.name}
