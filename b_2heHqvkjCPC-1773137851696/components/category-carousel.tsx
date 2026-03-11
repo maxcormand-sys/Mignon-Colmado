@@ -95,11 +95,12 @@ export function CategoryCarousel() {
     const maxScroll = track.scrollWidth / 3
 
     // Always scroll, even when dragging (velocity will override)
+    // Auto scroll in OPPOSITE direction to product carousel (left to right, so we decrease scrollLeft)
     if (Math.abs(velocityRef.current) > 0.5) {
       track.scrollLeft += velocityRef.current
       velocityRef.current *= 0.95
     } else if (!isDragging) {
-      track.scrollLeft += 0.7
+      track.scrollLeft -= 0.7 // Opposite direction to product carousel
     }
 
     if (track.scrollLeft >= maxScroll * 2) {

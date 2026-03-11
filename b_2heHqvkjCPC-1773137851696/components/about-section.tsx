@@ -4,12 +4,19 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 
 const fallingObjects = [
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/E38CEA8D-FC2C-4D10-AF84-8EFB4F73ADAD-Photoroom-BMfKqtfSeoRnjq4gphPzAAPCZEawnj.png", left: "5%", delay: 0, size: 180 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BA16B0A8-7EEA-4C9F-9CC7-AA9414FDAD54-Photoroom-tBh4afl4oHYz1TsxChEu7WcyQr8cMS.png", left: "22%", delay: 0.4, size: 150 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/D3A3ECFC-57B0-4671-908A-994625476304-Photoroom-B2SOT6VCoWtzydzm64mnUH8VaVS57S.png", left: "82%", delay: 0.8, size: 190 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8003375B-4B5F-4171-8AC0-98ECFDAD849F-Photoroom-Ssz0mpDbQubIFE1XjxJQUHFR0aAypD.png", left: "65%", delay: 1.2, size: 170 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8258F740-097D-4B7A-845E-D1E1EE9E0D11-Photoroom-jImEL2p0k14xVCKp22Fxz3yseFZ4fV.png", left: "42%", delay: 1.6, size: 160 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/E38CEA8D-FC2C-4D10-AF84-8EFB4F73ADAD-Photoroom-w9nzR3ZuMOE06PGhdrBYmrby1K4fIc.png", left: "5%", delay: 0, size: 180 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BA16B0A8-7EEA-4C9F-9CC7-AA9414FDAD54-Photoroom-EK0U9FXFBPM2J59RKPFVf1qsDHEWcp.png", left: "22%", delay: 0.4, size: 150 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/D3A3ECFC-57B0-4671-908A-994625476304-Photoroom-UCoLaLAizfOweKG1NNcrj7dTfHf44p.png", left: "82%", delay: 0.8, size: 190 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8003375B-4B5F-4171-8AC0-98ECFDAD849F-Photoroom-P6UCHfLUcl3oZoGYYTEgJoQ4KoARdf.png", left: "65%", delay: 1.2, size: 170 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8258F740-097D-4B7A-845E-D1E1EE9E0D11-Photoroom-FhZgwwUTfsXvstGHzTivlhvafxTYSB.png", left: "42%", delay: 1.6, size: 160 },
 ]
+
+// Small objects to display above each phrase (not reviews)
+const phraseObjects = {
+  subtitle: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/E38CEA8D-FC2C-4D10-AF84-8EFB4F73ADAD-Photoroom-w9nzR3ZuMOE06PGhdrBYmrby1K4fIc.png",
+  phrase1: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8003375B-4B5F-4171-8AC0-98ECFDAD849F-Photoroom-P6UCHfLUcl3oZoGYYTEgJoQ4KoARdf.png",
+  phrase2: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/D3A3ECFC-57B0-4671-908A-994625476304-Photoroom-UCoLaLAizfOweKG1NNcrj7dTfHf44p.png",
+}
 
 export function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -91,10 +98,9 @@ export function AboutSection() {
         {showFallingObjects && fallingObjects.map((obj, index) => (
           <div
             key={index}
-            className="absolute pointer-events-none z-10"
+            className="absolute pointer-events-none z-10 fall-object"
             style={{
               left: obj.left,
-              animation: `fall 2.5s ease-in-out forwards`,
               animationDelay: `${obj.delay}s`,
               top: "-200px",
             }}
@@ -104,31 +110,75 @@ export function AboutSection() {
               alt="Vintage lamp"
               width={obj.size}
               height={obj.size}
-              className="object-contain"
+              className="object-contain w-[100px] md:w-auto h-auto"
             />
           </div>
         ))}
+        
+        <style jsx>{`
+          .fall-object {
+            animation: fall 3s ease-in-out forwards;
+          }
+          @media (max-width: 768px) {
+            .fall-object {
+              animation: fall 4.5s ease-in-out forwards;
+            }
+          }
+        `}</style>
 
-        {/* CSS for falling animation */}
+        {/* CSS for falling animation - slower on mobile for more grace */}
         <style jsx global>{`
           @keyframes fall {
             0% {
               transform: translateY(0) rotate(-5deg);
               opacity: 0;
             }
-            15% {
+            10% {
               opacity: 1;
             }
-            50% {
-              transform: translateY(50vh) rotate(8deg);
+            30% {
+              transform: translateY(25vh) rotate(3deg);
               opacity: 1;
+            }
+            60% {
+              transform: translateY(55vh) rotate(-3deg);
+              opacity: 0.9;
             }
             85% {
-              opacity: 0.6;
+              transform: translateY(90vh) rotate(8deg);
+              opacity: 0.5;
             }
             100% {
-              transform: translateY(120vh) rotate(15deg);
+              transform: translateY(120vh) rotate(12deg);
               opacity: 0;
+            }
+          }
+          
+          @media (max-width: 768px) {
+            @keyframes fall {
+              0% {
+                transform: translateY(0) rotate(-3deg);
+                opacity: 0;
+              }
+              8% {
+                opacity: 1;
+              }
+              25% {
+                transform: translateY(20vh) rotate(2deg);
+                opacity: 1;
+              }
+              50% {
+                transform: translateY(45vh) rotate(-2deg);
+                opacity: 0.95;
+              }
+              75% {
+                transform: translateY(75vh) rotate(4deg);
+                opacity: 0.7;
+              }
+              100% {
+                transform: translateY(120vh) rotate(8deg);
+                opacity: 0;
+              }
             }
           }
         `}</style>
@@ -179,9 +229,18 @@ export function AboutSection() {
             transform: `translateY(${subtitle.y}px)`
           }}
         >
-          <p className="font-serif italic text-[clamp(1.2rem,3vw,1.8rem)] text-foreground/70 text-center max-w-2xl leading-[1.6]">
-            Un petit colmado al cor de Gracia
-          </p>
+          <div className="flex flex-col items-center">
+            <Image
+              src={phraseObjects.subtitle}
+              alt="Decorative lamp"
+              width={50}
+              height={50}
+              className="object-contain mb-4 w-[40px] md:w-[50px] h-auto"
+            />
+            <p className="font-serif italic text-[clamp(1.2rem,3vw,1.8rem)] text-foreground/70 text-center max-w-2xl leading-[1.6]">
+              Un petit colmado al cor de Gracia
+            </p>
+          </div>
         </div>
 
         {/* First phrase */}
@@ -192,9 +251,18 @@ export function AboutSection() {
             transform: `translateY(${phrase1.y}px)`
           }}
         >
-          <p className="font-serif italic text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
-            Viatgem per mercats i antiquaris d&apos;Europa buscant peces amb anima que mereixen una nova vida.
-          </p>
+          <div className="flex flex-col items-center">
+            <Image
+              src={phraseObjects.phrase1}
+              alt="Decorative lamp"
+              width={50}
+              height={50}
+              className="object-contain mb-4 w-[40px] md:w-[50px] h-auto"
+            />
+            <p className="font-serif italic text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
+              Viatgem per mercats i antiquaris d&apos;Europa buscant peces amb anima que mereixen una nova vida.
+            </p>
+          </div>
         </div>
 
         {/* Second phrase */}
@@ -205,9 +273,18 @@ export function AboutSection() {
             transform: `translateY(${phrase2.y}px)`
           }}
         >
-          <p className="font-serif italic text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
-            Creiem en la bellesa de l&apos;imperfecte i en donar una segona oportunitat als objectes que encara tenen molt per oferir.
-          </p>
+          <div className="flex flex-col items-center">
+            <Image
+              src={phraseObjects.phrase2}
+              alt="Decorative lamp"
+              width={50}
+              height={50}
+              className="object-contain mb-4 w-[40px] md:w-[50px] h-auto"
+            />
+            <p className="font-serif italic text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
+              Creiem en la bellesa de l&apos;imperfecte i en donar una segona oportunitat als objectes que encara tenen molt per oferir.
+            </p>
+          </div>
         </div>
 
         {/* Reviews */}
