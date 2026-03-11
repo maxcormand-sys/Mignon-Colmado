@@ -65,7 +65,6 @@ export function CategoryCarousel() {
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true)
   const animationRef = useRef<number | null>(null)
   const velocityRef = useRef(0)
   const lastXRef = useRef(0)
@@ -87,9 +86,9 @@ export function CategoryCarousel() {
     }
   }, [activeFilter])
 
-  // Auto-scroll animation
+  // Auto-scroll animation - ALWAYS running
   const animate = useCallback(() => {
-    if (!trackRef.current || !isAutoScrolling || isDragging) {
+    if (!trackRef.current) {
       animationRef.current = requestAnimationFrame(animate)
       return
     }
@@ -97,10 +96,11 @@ export function CategoryCarousel() {
     const track = trackRef.current
     const maxScroll = track.scrollWidth / 3
 
+    // Always scroll, even when dragging (velocity will override)
     if (Math.abs(velocityRef.current) > 0.5) {
       track.scrollLeft += velocityRef.current
       velocityRef.current *= 0.95
-    } else {
+    } else if (!isDragging) {
       track.scrollLeft += 0.7
     }
 
@@ -111,7 +111,7 @@ export function CategoryCarousel() {
     }
 
     animationRef.current = requestAnimationFrame(animate)
-  }, [isAutoScrolling, isDragging])
+  }, [isDragging])
 
   useEffect(() => {
     animationRef.current = requestAnimationFrame(animate)
@@ -124,7 +124,6 @@ export function CategoryCarousel() {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true)
-    setIsAutoScrolling(false)
     setStartX(e.pageX - (trackRef.current?.offsetLeft || 0))
     setScrollLeft(trackRef.current?.scrollLeft || 0)
     lastXRef.current = e.pageX
@@ -157,25 +156,21 @@ export function CategoryCarousel() {
 
   const handleMouseUp = () => {
     setIsDragging(false)
-    setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
   const handleMouseLeave = () => {
     if (isDragging) {
       setIsDragging(false)
-      setTimeout(() => setIsAutoScrolling(true), 2000)
     }
   }
 
   const handleTouchStart = () => {
     setIsDragging(true)
-    setIsAutoScrolling(false)
     velocityRef.current = 0
   }
 
   const handleTouchEnd = () => {
     setIsDragging(false)
-    setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
   return (
