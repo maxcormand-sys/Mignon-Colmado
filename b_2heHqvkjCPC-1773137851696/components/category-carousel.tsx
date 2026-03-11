@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
+// Filter categories for the carousel
 const filterCategories = ["Tot", "Iluminacio", "Ceramica", "Figures"] as const
 type FilterCategory = typeof filterCategories[number]
 
@@ -64,7 +65,6 @@ export function CategoryCarousel() {
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true)
   const animationRef = useRef<number | null>(null)
   const velocityRef = useRef(0)
   const lastXRef = useRef(0)
@@ -86,9 +86,9 @@ export function CategoryCarousel() {
     }
   }, [activeFilter])
 
-  // Auto-scroll animation
+  // Auto-scroll animation - ALWAYS running
   const animate = useCallback(() => {
-    if (!trackRef.current || !isAutoScrolling || isDragging) {
+    if (!trackRef.current) {
       animationRef.current = requestAnimationFrame(animate)
       return
     }
@@ -96,11 +96,12 @@ export function CategoryCarousel() {
     const track = trackRef.current
     const maxScroll = track.scrollWidth / 3
 
+    // Always scroll, even when dragging (velocity will override)
     if (Math.abs(velocityRef.current) > 0.5) {
       track.scrollLeft += velocityRef.current
       velocityRef.current *= 0.95
-    } else {
-      track.scrollLeft += 0.4
+    } else if (!isDragging) {
+      track.scrollLeft += 0.7
     }
 
     if (track.scrollLeft >= maxScroll * 2) {
@@ -110,7 +111,7 @@ export function CategoryCarousel() {
     }
 
     animationRef.current = requestAnimationFrame(animate)
-  }, [isAutoScrolling, isDragging])
+  }, [isDragging])
 
   useEffect(() => {
     animationRef.current = requestAnimationFrame(animate)
@@ -123,7 +124,6 @@ export function CategoryCarousel() {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true)
-    setIsAutoScrolling(false)
     setStartX(e.pageX - (trackRef.current?.offsetLeft || 0))
     setScrollLeft(trackRef.current?.scrollLeft || 0)
     lastXRef.current = e.pageX
@@ -156,25 +156,21 @@ export function CategoryCarousel() {
 
   const handleMouseUp = () => {
     setIsDragging(false)
-    setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
   const handleMouseLeave = () => {
     if (isDragging) {
       setIsDragging(false)
-      setTimeout(() => setIsAutoScrolling(true), 2000)
     }
   }
 
   const handleTouchStart = () => {
     setIsDragging(true)
-    setIsAutoScrolling(false)
     velocityRef.current = 0
   }
 
   const handleTouchEnd = () => {
     setIsDragging(false)
-    setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
   return (
@@ -210,16 +206,10 @@ export function CategoryCarousel() {
       </div>
 
       {/* Carousel */}
-      <div 
-        className="relative"
-        onMouseEnter={() => setIsAutoScrolling(false)}
-        onMouseLeave={() => {
-          if (!isDragging) setIsAutoScrolling(true)
-        }}
-      >
+      <div className="relative">
         <div
           ref={trackRef}
-          className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4"
+          className="flex gap-3 md:gap-4 overflow-x-auto cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           style={{ 
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -258,20 +248,12 @@ export function CategoryCarousel() {
                     loading="lazy"
                   />
                 </div>
-                <p className="mt-2 text-center text-[11px] font-medium uppercase tracking-[0.15em] text-foreground/70">
-                  {item.category}
-                </p>
               </Link>
             </article>
           ))}
         </div>
       </div>
 
-      <style jsx global>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   )
 }

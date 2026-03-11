@@ -15,7 +15,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true)
   const animationRef = useRef<number | null>(null)
   const velocityRef = useRef(0)
   const lastTimeRef = useRef(0)
@@ -26,9 +25,9 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
   // Duplicate products for infinite scroll effect (all products, no filter)
   const displayProducts = [...products, ...products, ...products]
 
-  // Auto-scroll animation
+  // Auto-scroll animation - ALWAYS running
   const animate = useCallback(() => {
-    if (!trackRef.current || !isAutoScrolling || isDragging) {
+    if (!trackRef.current) {
       animationRef.current = requestAnimationFrame(animate)
       return
     }
@@ -36,13 +35,13 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     const track = trackRef.current
     const maxScroll = track.scrollWidth / 3
 
-    // Apply velocity decay
+    // Apply velocity decay or auto-scroll
     if (Math.abs(velocityRef.current) > 0.5) {
       track.scrollLeft += velocityRef.current
       velocityRef.current *= 0.95
-    } else {
+    } else if (!isDragging) {
       // Auto scroll when no momentum - scroll in opposite direction (right to left)
-      track.scrollLeft -= 0.5
+      track.scrollLeft -= 0.7
     }
 
     // Loop back for infinite scroll
@@ -53,7 +52,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
     }
 
     animationRef.current = requestAnimationFrame(animate)
-  }, [isAutoScrolling, isDragging])
+  }, [isDragging])
 
   useEffect(() => {
     animationRef.current = requestAnimationFrame(animate)
@@ -67,7 +66,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
   // Mouse drag handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true)
-    setIsAutoScrolling(false)
     setStartX(e.pageX - (trackRef.current?.offsetLeft || 0))
     setScrollLeft(trackRef.current?.scrollLeft || 0)
     lastXRef.current = e.pageX
@@ -102,31 +100,25 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
 
   const handleMouseUp = () => {
     setIsDragging(false)
-    setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
   const handleMouseLeave = () => {
     if (isDragging) {
       setIsDragging(false)
-      setTimeout(() => setIsAutoScrolling(true), 2000)
     }
   }
 
   // Touch handlers - let native scroll handle it for maximum fluidity
   const handleTouchStart = () => {
     setIsDragging(true)
-    setIsAutoScrolling(false)
     velocityRef.current = 0
   }
 
   const handleTouchEnd = () => {
     setIsDragging(false)
-    setTimeout(() => setIsAutoScrolling(true), 2000)
   }
 
   // Wheel handler for trackpad - using native scroll for maximum fluidity
-  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  
   useEffect(() => {
     const track = trackRef.current
     if (!track) return
@@ -138,13 +130,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         e.preventDefault()
         track.scrollLeft += e.deltaY
       }
-      
-      setIsAutoScrolling(false)
-      
-      if (wheelTimeoutRef.current) {
-        clearTimeout(wheelTimeoutRef.current)
-      }
-      wheelTimeoutRef.current = setTimeout(() => setIsAutoScrolling(true), 2500)
     }
 
     track.addEventListener('wheel', handleNativeWheel, { passive: false })
@@ -167,17 +152,11 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
       </div>
 
       {/* Carousel container */}
-      <div 
-        className="relative"
-        onMouseEnter={() => setIsAutoScrolling(false)}
-        onMouseLeave={() => {
-          if (!isDragging) setIsAutoScrolling(true)
-        }}
-      >
+      <div className="relative">
         {/* Product track */}
         <div
           ref={trackRef}
-          className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none px-5 md:px-10 pb-4"
+          className="flex gap-0 overflow-x-auto cursor-grab active:cursor-grabbing select-none pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           style={{ 
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -209,7 +188,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                 className="block"
               >
                 {/* Image container - only photo, no hover change */}
-                <div className="relative aspect-[4/5] overflow-hidden bg-muted rounded-lg">
+                <div className="relative aspect-[4/5] overflow-hidden bg-muted">
                   <Image
                     src={product.image}
                     alt={product.name}
@@ -248,12 +227,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         </Link>
       </div>
 
-      {/* Hide scrollbar globally for this component */}
-      <style jsx global>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   )
 }
