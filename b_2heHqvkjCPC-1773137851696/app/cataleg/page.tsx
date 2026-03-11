@@ -17,27 +17,25 @@ export default function CatalegPage() {
     <>
       <CartSheet />
       <main className="min-h-screen bg-background">
-        {/* Header - turquoise, not full width, with original logo */}
-        <header className="sticky top-0 z-40 bg-background">
-          <div className="max-w-5xl mx-auto px-6 md:px-12">
-            <div className="bg-[#b3dfe0] rounded-b-2xl px-6 py-4 flex items-center justify-between">
-              <button 
-                onClick={() => router.back()}
-                className="flex items-center gap-2 text-[10px] uppercase tracking-[0.15em] text-[#2c2420]/70 hover:text-[#2c2420] transition-colors px-3 py-1.5 border border-[#2c2420]/20 rounded-full"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                Tornar
-              </button>
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-3JKidEghwvs0m1RG08AhgRXPs4rDzj.png"
-                alt="Mignon"
-                width={120}
-                height={40}
-                className="w-[100px] md:w-[120px] h-auto"
-                style={{ filter: 'brightness(0)' }}
-              />
-              <div className="w-[80px]" />
-            </div>
+        {/* Header - turquoise, floating with margins, no rounded corners */}
+        <header className="sticky top-4 z-40 px-4 md:px-8">
+          <div className="bg-[#b3dfe0] px-6 py-3 flex items-center justify-between">
+            <button 
+              onClick={() => router.back()}
+              className="flex items-center gap-2 text-[10px] uppercase tracking-[0.15em] text-[#2c2420]/70 hover:text-[#2c2420] transition-colors px-3 py-1.5 border border-[#2c2420]/20 rounded-full"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Tornar
+            </button>
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed-Photoroom-3JKidEghwvs0m1RG08AhgRXPs4rDzj.png"
+              alt="Mignon"
+              width={120}
+              height={40}
+              className="w-[100px] md:w-[120px] h-auto"
+              style={{ filter: 'brightness(0)' }}
+            />
+            <div className="w-[80px]" />
           </div>
         </header>
 
@@ -136,17 +134,11 @@ export default function CatalegPage() {
           </div>
         </section>
 
-        {/* Footer CTA */}
-        <section className="px-6 py-16 md:py-20 bg-[#b3dfe0]/20 text-center">
-          <p className="font-serif italic text-[14px] text-foreground/50 mb-6">
-            No trobes el que busques?
+        {/* Footer CTA - thinner */}
+        <section className="px-6 py-8 md:py-10 bg-[#b3dfe0]/20 text-center">
+          <p className="font-serif italic text-[13px] text-foreground/50">
+            No trobes el que busques? Contacta amb nosaltres
           </p>
-          <button
-            onClick={() => router.back()}
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-[10px] font-medium uppercase tracking-[0.15em] text-muted-foreground border border-border rounded-full hover:bg-foreground/5 transition-colors"
-          >
-            Contacta amb nosaltres
-          </button>
         </section>
       </main>
     </>
