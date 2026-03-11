@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
+// Filter categories for the carousel
 const filterCategories = ["Tot", "Iluminacio", "Ceramica", "Figures"] as const
 type FilterCategory = typeof filterCategories[number]
 
