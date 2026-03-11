@@ -175,12 +175,9 @@ export function CategoryCarousel() {
     <section className="pt-12 md:pt-20 pb-6 md:pb-10 bg-white">
       {/* Header */}
       <div className="px-5 md:px-10 mb-8 md:mb-12 text-center">
-        <Link
-          href="/cataleg"
-          className="inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 bg-[#b3dfe0] text-[#2c2420] text-[9px] md:text-[10px] font-medium uppercase tracking-[0.1em] md:tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors mb-4"
-        >
+        <span className="inline-block text-[10px] font-medium uppercase tracking-[0.4em] text-muted-foreground mb-4 px-4 py-1.5 border border-border rounded-full">
           Categories
-        </Link>
+        </span>
         <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] leading-[1] text-foreground tracking-tight mb-8">
           Explora per tipus
         </h2>

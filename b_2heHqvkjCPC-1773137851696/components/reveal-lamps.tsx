@@ -70,12 +70,9 @@ export function RevealLamps() {
   return (
     <section className="relative">
       <div className="bg-background px-6 pt-6 md:pt-8 pb-8 md:pb-10 text-center">
-        <Link
-          href="/cataleg"
-          className="inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 bg-[#b3dfe0] text-[#2c2420] text-[9px] md:text-[10px] font-medium uppercase tracking-[0.1em] md:tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors mb-3"
-        >
+        <span className="inline-block text-[10px] font-medium uppercase tracking-[0.4em] text-muted-foreground mb-3 px-4 py-1.5 border border-border rounded-full">
           Descobreix
-        </Link>
+        </span>
         <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] text-foreground tracking-[-0.02em]">
           Prem per encendre
         </h2>
