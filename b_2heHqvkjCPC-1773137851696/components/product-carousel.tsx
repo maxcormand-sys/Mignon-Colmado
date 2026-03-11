@@ -146,9 +146,15 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         <h2 className="font-serif italic text-[clamp(2rem,5vw,3.5rem)] leading-[1] text-foreground tracking-tight mb-4">
           Objectes trobats
         </h2>
-        <p className="text-[14px] text-muted-foreground max-w-md mx-auto">
+        <p className="text-[14px] text-muted-foreground max-w-md mx-auto mb-6">
           Piezas unicas seleccionadas en mercados de toda Europa
         </p>
+        <Link
+          href="/cataleg"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#b3dfe0] text-[#2c2420] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors"
+        >
+          Cataleg
+        </Link>
       </div>
 
       {/* Carousel container */}
@@ -217,15 +223,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         </div>
       </div>
 
-      {/* Button below carousel */}
-      <div className="px-5 md:px-10 pt-10 md:pt-14 text-center">
-        <Link
-          href="/cataleg"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#b3dfe0] text-[#2c2420] text-[10px] font-medium uppercase tracking-[0.15em] rounded-full hover:bg-[#9dd1d3] transition-colors"
-        >
-          Explorar col·leccio
-        </Link>
-      </div>
+
 
     </section>
   )

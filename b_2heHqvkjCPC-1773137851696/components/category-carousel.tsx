@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 // Filter categories for the carousel
-const filterCategories = ["Tot", "Iluminacio", "Ceramica", "Figures"] as const
+const filterCategories = ["Iluminacio", "Ceramica", "Figures"] as const
 type FilterCategory = typeof filterCategories[number]
 
 const allItems = [
@@ -61,7 +61,7 @@ const allItems = [
 
 export function CategoryCarousel() {
   const trackRef = useRef<HTMLDivElement>(null)
-  const [activeFilter, setActiveFilter] = useState<FilterCategory>("Tot")
+  const [activeFilter, setActiveFilter] = useState<FilterCategory>("Iluminacio")
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
@@ -72,9 +72,7 @@ export function CategoryCarousel() {
   const hasDraggedRef = useRef(false)
   const dragStartPosRef = useRef(0)
 
-  const filteredItems = activeFilter === "Tot" 
-    ? allItems 
-    : allItems.filter(item => item.category === activeFilter)
+  const filteredItems = allItems.filter(item => item.category === activeFilter)
 
   // Duplicate items for infinite scroll
   const displayItems = [...filteredItems, ...filteredItems, ...filteredItems]
@@ -177,7 +175,7 @@ export function CategoryCarousel() {
     <section className="pt-12 md:pt-20 pb-6 md:pb-10 bg-white">
       {/* Header */}
       <div className="px-5 md:px-10 mb-8 md:mb-12 text-center">
-        <span className="inline-block text-[10px] font-medium uppercase tracking-[0.4em] text-muted-foreground mb-4">
+        <span className="inline-block text-[10px] font-medium uppercase tracking-[0.4em] text-muted-foreground mb-4 px-4 py-1.5 border border-border rounded-full">
           Categories
         </span>
         <h2 className="font-serif italic text-[clamp(1.8rem,4vw,2.8rem)] leading-[1] text-foreground tracking-tight mb-8">
@@ -228,7 +226,7 @@ export function CategoryCarousel() {
               className="flex-shrink-0 w-[280px] md:w-[340px] group"
             >
               <Link
-                href={`/cataleg?category=${item.category.toLowerCase()}`}
+                href={`/producto/${item.id}`}
                 onClick={(e) => {
                   if (hasDraggedRef.current) {
                     e.preventDefault()
@@ -247,6 +245,10 @@ export function CategoryCarousel() {
                     draggable={false}
                     loading="lazy"
                   />
+                </div>
+                {/* Product name on hover */}
+                <div className="mt-3 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <h3 className="font-serif italic text-[14px] text-foreground">{item.name}</h3>
                 </div>
               </Link>
             </article>
