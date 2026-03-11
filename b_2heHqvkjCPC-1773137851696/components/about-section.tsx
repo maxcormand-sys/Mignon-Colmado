@@ -5,7 +5,7 @@ export function AboutSection() {
   return (
     <section className="bg-[#2c2420] text-[#fffdf8]">
       {/* Full width image with gradient */}
-      <div className="relative w-full h-[50vh] md:h-[65vh]">
+      <div className="relative w-full h-[350px] md:h-[500px] lg:h-[600px]">
         <Image
           src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-vU1ibqBrPdVovGBld7VAGWSS9SH6Q2.jpg"
           alt="Interior de Mignon - El colmado dels objectes trobats"
