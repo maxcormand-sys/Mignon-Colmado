@@ -28,12 +28,13 @@ export function AboutSection() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // 5 phases for 5 elements
-  // Phase 1: 0-0.2 = Image
-  // Phase 2: 0.2-0.4 = Title
-  // Phase 3: 0.4-0.55 = Subtitle
-  // Phase 4: 0.55-0.75 = First phrase
-  // Phase 5: 0.75-1 = Second phrase
+  // 6 phases for 6 elements
+  // Phase 1: 0-0.15 = Image
+  // Phase 2: 0.15-0.3 = Title
+  // Phase 3: 0.3-0.42 = Subtitle
+  // Phase 4: 0.42-0.55 = First phrase
+  // Phase 5: 0.55-0.68 = Second phrase
+  // Phase 6: 0.68-1 = Reviews
 
   const getElementState = (startPhase: number, endPhase: number) => {
     if (scrollProgress < startPhase) {
@@ -45,7 +46,7 @@ export function AboutSection() {
         y: Math.max(0, 30 - phaseProgress * 30) 
       }
     } else {
-      const fadeProgress = (scrollProgress - endPhase) / 0.15
+      const fadeProgress = (scrollProgress - endPhase) / 0.12
       return { 
         opacity: Math.max(0, 1 - fadeProgress), 
         y: 0 
@@ -53,11 +54,18 @@ export function AboutSection() {
     }
   }
 
-  const image = getElementState(0, 0.2)
-  const title = getElementState(0.2, 0.4)
-  const subtitle = getElementState(0.4, 0.55)
-  const phrase1 = getElementState(0.55, 0.75)
-  const phrase2 = getElementState(0.75, 1)
+  const image = getElementState(0, 0.15)
+  const title = getElementState(0.15, 0.3)
+  const subtitle = getElementState(0.3, 0.42)
+  const phrase1 = getElementState(0.42, 0.55)
+  const phrase2 = getElementState(0.55, 0.68)
+  const reviews = getElementState(0.68, 1)
+
+  const reviewsData = [
+    { name: "Maria L.", text: "Un tresor amagat a Gracia. Cada visita es una sorpresa." },
+    { name: "Jordi P.", text: "Peces uniques amb molta personalitat. Encantador." },
+    { name: "Anna R.", text: "La millor botiga vintage de Barcelona, sens dubte." },
+  ]
 
   return (
     <section 
@@ -143,6 +151,35 @@ export function AboutSection() {
           <p className="font-serif italic text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
             Creiem en la bellesa de l&apos;imperfecte i en donar una segona oportunitat als objectes que encara tenen molt per oferir.
           </p>
+        </div>
+
+        {/* Reviews */}
+        <div 
+          className="absolute inset-0 flex items-center justify-center px-6"
+          style={{ 
+            opacity: reviews.opacity,
+            transform: `translateY(${reviews.y}px)`
+          }}
+        >
+          <div className="flex flex-col md:flex-row gap-8 md:gap-12 max-w-4xl">
+            {reviewsData.map((review, index) => (
+              <div key={index} className="text-center flex-1">
+                <div className="flex justify-center gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-3.5 h-3.5 text-[#b3dfe0]" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="font-serif italic text-[14px] md:text-[15px] text-foreground/60 mb-3 leading-[1.7]">
+                  &ldquo;{review.text}&rdquo;
+                </p>
+                <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-foreground/40">
+                  {review.name}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>

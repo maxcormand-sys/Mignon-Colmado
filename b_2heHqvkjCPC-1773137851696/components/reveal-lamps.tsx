@@ -78,7 +78,7 @@ export function RevealLamps() {
         </h2>
       </div>
 
-      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-8 md:px-10 pb-12">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-6 md:px-8 pb-12">
         {lamps.map((lamp) => (
           <div
             key={lamp.id}
