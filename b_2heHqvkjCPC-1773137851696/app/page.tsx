@@ -13,10 +13,10 @@ export default function HomePage() {
     <>
       <main>
         <Hero />
+        <AboutSection />
         <RevealLamps />
         <CategoryCarousel />
         <ProductGrid />
-        <AboutSection />
       </main>
       <Footer />
       <CartSheet />
