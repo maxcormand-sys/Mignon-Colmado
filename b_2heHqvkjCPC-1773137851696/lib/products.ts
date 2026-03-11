@@ -8,6 +8,7 @@ export interface Product {
   imageAlt?: string
   color: string
   sold?: boolean
+  hasBackground?: boolean // true for products with styled background photos
 }
 
 export const categories = [
@@ -93,7 +94,7 @@ export const products: Product[] = [
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8F5FC5CF-7857-4A31-B0C3-F9F62964FBD0-obuTJaASjUTxcOI8KEUdFleZwxgjtk.png",
     color: "#DAA520",
   },
-  // Original products
+  // Original products with styled backgrounds (for product carousel)
   {
     id: "flexo-azul",
     name: "Flexo Azul Cielo",
@@ -102,6 +103,7 @@ export const products: Product[] = [
     description: "Lampara de escritorio flexible en azul cielo con detalles cromados. Anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pLampara%20azul%20flexo-twd06uCsmLgf2MFNLR1YJ7AwtqMYnk.jpg",
     color: "#7BBBD4",
+    hasBackground: true,
   },
   {
     id: "globo-rojo-tallado",
@@ -111,6 +113,7 @@ export const products: Product[] = [
     description: "Base tallada en rojo coral con globo de cristal opalino y detalles en laton. Anos 60.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pLampara%20roja%20fondo70s-u0HSmpnhOwZ3vVfJ91NZZBwiIrHgac.jpg",
     color: "#E04A3E",
+    hasBackground: true,
   },
   {
     id: "globo-rojo-cromado",
@@ -120,6 +123,7 @@ export const products: Product[] = [
     description: "Cuerpo rojo con acabados cromados y globo de vidrio opalino. Space age anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pLamparita%20roja%20pan%CC%83uelo%20verde-I9GMaevKHwIhAjJSZUM1JoF6qkjzTa.jpg",
     color: "#E04A3E",
+    hasBackground: true,
   },
   {
     id: "perfumero-verde",
@@ -129,6 +133,7 @@ export const products: Product[] = [
     description: "Lampara en verde brillante con globo opalino. Forma de perfumero. Anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pPerfumero%20verde-iOleJCJSFq08ZRptSHx4YV35pmsk1v.jpg",
     color: "#4AAF5B",
+    hasBackground: true,
   },
   {
     id: "lampara-seta-cromada",
@@ -138,6 +143,7 @@ export const products: Product[] = [
     description: "Lampara seta con base cromada y globo opalino blanco. Anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A6160-bAW48hAwhIqUTeUUh0AmvolGAXIfgT.jpg",
     color: "#C0C0C0",
+    hasBackground: true,
   },
   {
     id: "aceiteras-ambar",
@@ -147,6 +153,7 @@ export const products: Product[] = [
     description: "Juego de aceiteras en vidrio ambar soplado. Estilo mediterraneo anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pAceiteras%20ambar70s-mFxms2H0BCCAE0CfTnaSNwl89s2GhO.jpg",
     color: "#D4A574",
+    hasBackground: true,
   },
   {
     id: "jarron-pajaro",
@@ -156,6 +163,7 @@ export const products: Product[] = [
     description: "Jarron de porcelana blanca con pajaro pintado a mano. Pieza unica.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A9319-rm4dRx2kuK59pbyCVb9JG1GxR2KCWD.jpg",
     color: "#F8BBD9",
+    hasBackground: true,
   },
   {
     id: "cafetera-porcelana",
@@ -165,6 +173,7 @@ export const products: Product[] = [
     description: "Cafetera italiana con vaso de porcelana decorada. Anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pCafetera%20porcelana%20con%20vase-DWjEj0chQzJaIOFFuXmCsl5adrzoYH.jpg",
     color: "#8B4513",
+    hasBackground: true,
   },
   {
     id: "cristaleria-ambar",
@@ -174,6 +183,7 @@ export const products: Product[] = [
     description: "Set de copas y jarras en vidrio ambar. Anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pAmbar-iTlJyleGaP213gekwvTpP5KevSqWmm.jpg",
     color: "#D4A574",
+    hasBackground: true,
   },
   {
     id: "botella-licor-naranja",
@@ -183,6 +193,7 @@ export const products: Product[] = [
     description: "Botella de licor en vidrio naranja con tapon dorado. Anos 60.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pBotella%20licor%20naranja-jjFqb7eMIKEEEsL5ZETjZxOLRDYa3B.jpg",
     color: "#FF6B35",
+    hasBackground: true,
   },
   {
     id: "platos-festoneados",
@@ -192,6 +203,7 @@ export const products: Product[] = [
     description: "Set de platos con borde festoneado y filete dorado. Anos 60.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A5643-QZMWpRBBbcB2QiDvwkBXslVJdvhlrh.jpg",
     color: "#D4AF37",
+    hasBackground: true,
   },
   {
     id: "jarron-naranja",
@@ -201,6 +213,7 @@ export const products: Product[] = [
     description: "Jarron de vidrio opalino naranja. Estilo pop anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A5623-BWsCcWgPyhyPe1NEbyM0x8aaAQkGkf.jpg",
     color: "#FFA500",
+    hasBackground: true,
   },
   {
     id: "decantador-ambar",
@@ -210,6 +223,7 @@ export const products: Product[] = [
     description: "Decantador de vidrio ambar con tapon de madera. Artesanal.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A9314-sGWMFLCf75zvQwk7yvkAMf4k4IDKSd.jpg",
     color: "#8B4513",
+    hasBackground: true,
   },
   {
     id: "decantador-negro",
@@ -219,6 +233,7 @@ export const products: Product[] = [
     description: "Decantador de ceramica negra esmaltada. Pieza unica anos 60.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A9864-EKfjapipAolSZRI3pS6FcfLDTzq8jS.jpg",
     color: "#2C2420",
+    hasBackground: true,
   },
   {
     id: "cafetera-pyrex",
@@ -228,6 +243,7 @@ export const products: Product[] = [
     description: "Cafetera Pyrex con detalles dorados. Made in France anos 60.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pCafetera%20Pyrex%20France-gwvCayFukU0MgO70Ol7uPWFN1JpyGy.jpg",
     color: "#DAA520",
+    hasBackground: true,
   },
   {
     id: "cafetera-valira",
@@ -237,6 +253,7 @@ export const products: Product[] = [
     description: "Cafetera Valira porcelana blanca con lineas rojas. Anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pCafetera%20Valira-8wuPvPwD5nf8ikBpwsG5xuYjEAupLr.jpg",
     color: "#DC143C",
+    hasBackground: true,
   },
   {
     id: "bambi-vintage",
@@ -246,6 +263,7 @@ export const products: Product[] = [
     description: "Figura de Bambi con acabado craquelado y detalles dorados. Anos 50.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pBambi1-FDmA9UVowC2HrmHrqIWKuWqdYTTrtM.jpg",
     color: "#C9A961",
+    hasBackground: true,
   },
   {
     id: "cafetera-cafe",
@@ -255,6 +273,7 @@ export const products: Product[] = [
     description: "Cafetera de cristal con letras 'Cafe'. Anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pCafetera%20Randwyck%20Maastricht-7PKIVhzSTEMyPPaW06Pr0LJ9w9aRsU.jpg",
     color: "#FF6347",
+    hasBackground: true,
   },
   {
     id: "bolsos-baquelita",
@@ -264,6 +283,7 @@ export const products: Product[] = [
     description: "Par de bolsos de baquelita marron con cadena dorada. Anos 40.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A8436-lhllAtQvyJD25Zpm6ntsrAH7I6f6Tt.jpg",
     color: "#5D4037",
+    hasBackground: true,
   },
   {
     id: "muebles-miniatura",
@@ -273,6 +293,7 @@ export const products: Product[] = [
     description: "Set de muebles de jardin en plastico. Alemania anos 50.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pAlemania%20plastico%201950-jlhchbvZTQ1hNCc9GhRZbsRZTcqUZS.jpg",
     color: "#DC143C",
+    hasBackground: true,
   },
   {
     id: "aceitera-soplado",
@@ -282,6 +303,7 @@ export const products: Product[] = [
     description: "Aceitera de vidrio ambar soplado a mano. Artesanal.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pAceitera%20vidrio%20soplado-aszvOxhcPn0E5s5cqeFo1wiYybkrFk.jpg",
     color: "#D4A574",
+    hasBackground: true,
   },
   {
     id: "agenda-genda",
@@ -291,6 +313,7 @@ export const products: Product[] = [
     description: "Par de agendas Genda con acabado esmaltado. Anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A7963-8TyHo67Ewya2JvVeFi614ssp2MqVSi.jpg",
     color: "#DAA520",
+    hasBackground: true,
   },
   {
     id: "jinete-vintage",
@@ -300,6 +323,7 @@ export const products: Product[] = [
     description: "Figura de jinete a caballo con sombrero rojo y traje amarillo. Coleccion anos 60.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A9125-8zSJgKzZA18GQVaiOb4zZoTwV0oFNu.jpg",
     color: "#2E7D32",
+    hasBackground: true,
   },
   {
     id: "tetera-verde",
@@ -309,5 +333,6 @@ export const products: Product[] = [
     description: "Tetera de ceramica verde oliva con patron geometrico. Anos 70.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/p001A6169-hAZt3QBIELsOzpwCFeH5KzKhMQhSW0.jpg",
     color: "#6B8E23",
+    hasBackground: true,
   },
 ]
