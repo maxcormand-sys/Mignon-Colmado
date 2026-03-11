@@ -8,7 +8,7 @@ export function AboutSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[700px]">
         
         {/* Image side */}
-        <div className="relative h-[400px] lg:h-auto order-2 lg:order-1">
+        <div className="relative h-[400px] lg:h-full lg:min-h-[700px] order-2 lg:order-1">
           <Image
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-vU1ibqBrPdVovGBld7VAGWSS9SH6Q2.jpg"
             alt="Interior de la tienda Mignon amb objectes vintage"
