@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 
 const fallingObjects = [
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/E38CEA8D-FC2C-4D10-AF84-8EFB4F73ADAD-Photoroom-BMfKqtfSeoRnjq4gphPzAAPCZEawnj.png", left: "8%", delay: 0, size: 120 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BA16B0A8-7EEA-4C9F-9CC7-AA9414FDAD54-Photoroom-tBh4afl4oHYz1TsxChEu7WcyQr8cMS.png", left: "25%", delay: 0.15, size: 100 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/D3A3ECFC-57B0-4671-908A-994625476304-Photoroom-B2SOT6VCoWtzydzm64mnUH8VaVS57S.png", left: "85%", delay: 0.25, size: 130 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8003375B-4B5F-4171-8AC0-98ECFDAD849F-Photoroom-Ssz0mpDbQubIFE1XjxJQUHFR0aAypD.png", left: "70%", delay: 0.35, size: 110 },
-  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8258F740-097D-4B7A-845E-D1E1EE9E0D11-Photoroom-jImEL2p0k14xVCKp22Fxz3yseFZ4fV.png", left: "45%", delay: 0.45, size: 95 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/E38CEA8D-FC2C-4D10-AF84-8EFB4F73ADAD-Photoroom-BMfKqtfSeoRnjq4gphPzAAPCZEawnj.png", left: "5%", delay: 0, size: 180 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BA16B0A8-7EEA-4C9F-9CC7-AA9414FDAD54-Photoroom-tBh4afl4oHYz1TsxChEu7WcyQr8cMS.png", left: "22%", delay: 0.05, size: 150 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/D3A3ECFC-57B0-4671-908A-994625476304-Photoroom-B2SOT6VCoWtzydzm64mnUH8VaVS57S.png", left: "82%", delay: 0.1, size: 190 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8003375B-4B5F-4171-8AC0-98ECFDAD849F-Photoroom-Ssz0mpDbQubIFE1XjxJQUHFR0aAypD.png", left: "65%", delay: 0.15, size: 170 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8258F740-097D-4B7A-845E-D1E1EE9E0D11-Photoroom-jImEL2p0k14xVCKp22Fxz3yseFZ4fV.png", left: "42%", delay: 0.2, size: 160 },
 ]
 
 export function AboutSection() {
@@ -69,8 +69,8 @@ export function AboutSection() {
   const phrase2 = getElementState(0.55, 0.68)
   const reviews = getElementState(0.68, 1)
 
-  // Calculate falling objects visibility (start when reviews appear)
-  const showFallingObjects = scrollProgress >= 0.68
+  // Calculate falling objects visibility (start a bit earlier so you see them even with fast scroll)
+  const showFallingObjects = scrollProgress >= 0.6
 
   const reviewsData = [
     { name: "Maria L.", text: "Un tresor amagat a Gracia. Cada visita es una sorpresa." },
@@ -94,9 +94,9 @@ export function AboutSection() {
             className="absolute pointer-events-none z-10"
             style={{
               left: obj.left,
-              animation: `fall 1.8s ease-in forwards`,
+              animation: `fall 0.9s ease-in forwards`,
               animationDelay: `${obj.delay}s`,
-              top: "-150px",
+              top: "-200px",
             }}
           >
             <Image
