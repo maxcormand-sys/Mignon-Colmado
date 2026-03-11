@@ -28,13 +28,12 @@ export function AboutSection() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // 6 phases for 6 elements
-  // Phase 1: 0-0.15 = Image 1
-  // Phase 2: 0.15-0.3 = Title
-  // Phase 3: 0.3-0.45 = Subtitle
-  // Phase 4: 0.45-0.6 = First phrase
-  // Phase 5: 0.6-0.75 = Second phrase
-  // Phase 6: 0.75-1 = Image 2
+  // 5 phases for 5 elements
+  // Phase 1: 0-0.2 = Image
+  // Phase 2: 0.2-0.4 = Title
+  // Phase 3: 0.4-0.55 = Subtitle
+  // Phase 4: 0.55-0.75 = First phrase
+  // Phase 5: 0.75-1 = Second phrase
 
   const getElementState = (startPhase: number, endPhase: number) => {
     if (scrollProgress < startPhase) {
@@ -46,7 +45,7 @@ export function AboutSection() {
         y: Math.max(0, 30 - phaseProgress * 30) 
       }
     } else {
-      const fadeProgress = (scrollProgress - endPhase) / 0.12
+      const fadeProgress = (scrollProgress - endPhase) / 0.15
       return { 
         opacity: Math.max(0, 1 - fadeProgress), 
         y: 0 
@@ -54,12 +53,11 @@ export function AboutSection() {
     }
   }
 
-  const image = getElementState(0, 0.15)
-  const title = getElementState(0.15, 0.3)
-  const subtitle = getElementState(0.3, 0.45)
-  const phrase1 = getElementState(0.45, 0.6)
-  const phrase2 = getElementState(0.6, 0.75)
-  const image2 = getElementState(0.75, 1)
+  const image = getElementState(0, 0.2)
+  const title = getElementState(0.2, 0.4)
+  const subtitle = getElementState(0.4, 0.55)
+  const phrase1 = getElementState(0.55, 0.75)
+  const phrase2 = getElementState(0.75, 1)
 
   return (
     <section 
@@ -145,25 +143,6 @@ export function AboutSection() {
           <p className="font-serif italic text-[15px] md:text-[17px] text-foreground/60 text-center max-w-lg leading-[1.9]">
             Creiem en la bellesa de l&apos;imperfecte i en donar una segona oportunitat als objectes que encara tenen molt per oferir.
           </p>
-        </div>
-
-        {/* Final image */}
-        <div 
-          className="absolute inset-0 flex items-center justify-center px-8"
-          style={{ 
-            opacity: image2.opacity,
-            transform: `translateY(${image2.y}px)`
-          }}
-        >
-          <div className="relative w-full max-w-3xl h-[60vh] overflow-hidden">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-2-5TvFnulDRZGEyzjPTKlg2TRvnVyduU.jpg"
-              alt="Raco de Mignon"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 900px"
-            />
-          </div>
         </div>
 
       </div>
