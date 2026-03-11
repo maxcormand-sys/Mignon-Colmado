@@ -65,8 +65,7 @@ export default function ProductPage() {
               alt="Mignon"
               width={100}
               height={33}
-              className="h-auto"
-              style={{ filter: 'brightness(0)', width: 'auto', maxWidth: '100px' }}
+              style={{ filter: 'brightness(0)', width: 'auto', height: 'auto', maxWidth: '100px' }}
             />
           </Link>
 
