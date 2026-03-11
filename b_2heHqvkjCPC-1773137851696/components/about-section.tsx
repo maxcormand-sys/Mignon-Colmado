@@ -3,6 +3,14 @@
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 
+const fallingObjects = [
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/E38CEA8D-FC2C-4D10-AF84-8EFB4F73ADAD-Photoroom-BMfKqtfSeoRnjq4gphPzAAPCZEawnj.png", left: "8%", delay: 0, size: 70 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BA16B0A8-7EEA-4C9F-9CC7-AA9414FDAD54-Photoroom-tBh4afl4oHYz1TsxChEu7WcyQr8cMS.png", left: "25%", delay: 0.3, size: 60 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/D3A3ECFC-57B0-4671-908A-994625476304-Photoroom-B2SOT6VCoWtzydzm64mnUH8VaVS57S.png", left: "85%", delay: 0.5, size: 75 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8003375B-4B5F-4171-8AC0-98ECFDAD849F-Photoroom-Ssz0mpDbQubIFE1XjxJQUHFR0aAypD.png", left: "70%", delay: 0.7, size: 65 },
+  { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8258F740-097D-4B7A-845E-D1E1EE9E0D11-Photoroom-jImEL2p0k14xVCKp22Fxz3yseFZ4fV.png", left: "45%", delay: 0.9, size: 55 },
+]
+
 export function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -61,6 +69,9 @@ export function AboutSection() {
   const phrase2 = getElementState(0.55, 0.68)
   const reviews = getElementState(0.68, 1)
 
+  // Calculate falling objects visibility (start when reviews appear)
+  const showFallingObjects = scrollProgress >= 0.68
+
   const reviewsData = [
     { name: "Maria L.", text: "Un tresor amagat a Gracia. Cada visita es una sorpresa." },
     { name: "Jordi P.", text: "Peces uniques amb molta personalitat. Encantador." },
@@ -76,6 +87,45 @@ export function AboutSection() {
       {/* Sticky container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
         
+        {/* Falling objects */}
+        {showFallingObjects && fallingObjects.map((obj, index) => (
+          <div
+            key={index}
+            className="absolute pointer-events-none z-10"
+            style={{
+              left: obj.left,
+              animation: `fall 4s ease-in forwards`,
+              animationDelay: `${obj.delay}s`,
+              top: "-100px",
+            }}
+          >
+            <Image
+              src={obj.src}
+              alt="Vintage lamp"
+              width={obj.size}
+              height={obj.size}
+              className="object-contain"
+            />
+          </div>
+        ))}
+
+        {/* CSS for falling animation */}
+        <style jsx global>{`
+          @keyframes fall {
+            0% {
+              transform: translateY(0) rotate(0deg);
+              opacity: 0;
+            }
+            10% {
+              opacity: 0.8;
+            }
+            100% {
+              transform: translateY(120vh) rotate(20deg);
+              opacity: 0;
+            }
+          }
+        `}</style>
+
         {/* Image - centered, not full screen */}
         <div 
           className="absolute inset-0 flex items-center justify-center px-8"
