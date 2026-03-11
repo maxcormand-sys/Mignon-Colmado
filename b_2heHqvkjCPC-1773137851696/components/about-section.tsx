@@ -94,7 +94,7 @@ export function AboutSection() {
             className="absolute pointer-events-none z-10"
             style={{
               left: obj.left,
-              animation: `fall 0.9s ease-in forwards`,
+              animation: `fall 1.5s ease-in forwards`,
               animationDelay: `${obj.delay}s`,
               top: "-200px",
             }}
